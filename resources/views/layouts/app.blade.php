@@ -12,6 +12,17 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+
+
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    
+
 </head>
 <body>
     <div id="app">
@@ -29,7 +40,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                        Inventory Management
                     </a>
                 </div>
 
@@ -45,7 +56,22 @@
                         @guest
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
-                        @else
+                            @else
+                            <li id="navDashboard"><a href="{{route('dashboard')}}"><i class="glyphicon glyphicon-list-alt"></i>  Dashboard</a></li>        
+        
+                                        <li id="navBrand"><a href="{{route('brands')}}"><i class="glyphicon glyphicon-btc"></i>  Brand</a></li>        
+                                
+                                        <li id="navCategories"><a href="{{route('categories')}}"> <i class="glyphicon glyphicon-th-list"></i> Category</a></li>        
+                                
+                                        <li id="navProduct"><a href="{{route('products')}}"> <i class="glyphicon glyphicon-ruble"></i> Product </a></li>  
+                                    <li class="dropdown" id="navOrder">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="glyphicon glyphicon-shopping-cart"></i> Orders <span class="caret"></span></a>
+                                        <ul class="dropdown-menu">            
+                                            <li id="topNavAddOrder"><a href="{{route('addorders')}}"> <i class="glyphicon glyphicon-plus"></i> Add Orders</a></li>            
+                                            <li id="topNavManageOrder"><a href="{{route('orders')}}"> <i class="glyphicon glyphicon-edit"></i> Manage Orders</a></li>            
+                                        </ul>
+                                    </li> 
+                                    <li id="navReport"><a href=""> <i class="glyphicon glyphicon-check"></i> Report </a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -70,11 +96,14 @@
                 </div>
             </div>
         </nav>
-
-        @yield('content')
     </div>
+    
+    @yield('content')
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
 </body>
 </html>

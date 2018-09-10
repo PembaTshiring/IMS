@@ -17,4 +17,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/dashboard', 'HomeController@index')->name('dashboard');
+
+Route::get('/brands',['as'=>'brands', 'uses'=>'BrandController@index']);
+Route::get('/categories',['as'=>'categories', 'uses'=>'CategoryController@index']);
+Route::get('/products',['as'=>'products', 'uses'=>'ProductController@index']);
+Route::get('/orders',['as'=>'orders', 'uses'=>'OrderController@index']);
+Route::get('/addorders',['as'=>'addorders', 'uses'=>'OrderController@addorder']);

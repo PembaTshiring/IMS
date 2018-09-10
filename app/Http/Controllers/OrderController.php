@@ -13,7 +13,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        return view('vieworders');
     }
 
     /**
@@ -80,5 +80,8 @@ class OrderController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function addorder(){
+        return view('addOrders');
     }
 }
