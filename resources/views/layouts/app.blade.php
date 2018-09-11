@@ -12,14 +12,16 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('css/custom.css') }}" rel="stylesheet"> --}}
 
 
     <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+{{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> --}}
 
     
 
@@ -59,16 +61,16 @@
                             @else
                             <li id="navDashboard"><a href="{{route('dashboard')}}"><i class="glyphicon glyphicon-list-alt"></i>  Dashboard</a></li>        
         
-                                        <li id="navBrand"><a href="{{route('brands')}}"><i class="glyphicon glyphicon-btc"></i>  Brand</a></li>        
+                                        <li id="navBrand"><a href="{{route('brands.index')}}"><i class="glyphicon glyphicon-btc"></i>  Brand</a></li>        
                                 
-                                        <li id="navCategories"><a href="{{route('categories')}}"> <i class="glyphicon glyphicon-th-list"></i> Category</a></li>        
+                                        <li id="navCategories"><a href="{{route('categories.index')}}"> <i class="glyphicon glyphicon-th-list"></i> Category</a></li>        
                                 
-                                        <li id="navProduct"><a href="{{route('products')}}"> <i class="glyphicon glyphicon-ruble"></i> Product </a></li>  
+                                        <li id="navProduct"><a href="{{route('products.index')}}"> <i class="glyphicon glyphicon-ruble"></i> Product </a></li>  
                                     <li class="dropdown" id="navOrder">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="glyphicon glyphicon-shopping-cart"></i> Orders <span class="caret"></span></a>
                                         <ul class="dropdown-menu">            
-                                            <li id="topNavAddOrder"><a href="{{route('addorders')}}"> <i class="glyphicon glyphicon-plus"></i> Add Orders</a></li>            
-                                            <li id="topNavManageOrder"><a href="{{route('orders')}}"> <i class="glyphicon glyphicon-edit"></i> Manage Orders</a></li>            
+                                            <li id="topNavAddOrder"><a href="{{route('orders.create')}}"> <i class="glyphicon glyphicon-plus"></i> Add Orders</a></li>            
+                                            <li id="topNavManageOrder"><a href="{{route('orders.index')}}"> <i class="glyphicon glyphicon-edit"></i> Manage Orders</a></li>            
                                         </ul>
                                     </li> 
                                     <li id="navReport"><a href=""> <i class="glyphicon glyphicon-check"></i> Report </a></li>
@@ -102,8 +104,21 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> --}}
+    {{-- <script>
+      $('#edit').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget) 
+      var title = button.data('brandname') 
+      var description = button.data('mydescription') 
+      var cat_id = button.data('catid') 
+      var modal = $(this)
+      modal.find('.modal-body #name').val(title);
+      modal.find('.modal-body #des').val(description);
+      modal.find('.modal-body #cat_id').val(cat_id);
+})
+    </script> --}}
+
 
 </body>
 </html>

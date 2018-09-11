@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Brand;
 
 use Illuminate\Http\Request;
 
@@ -13,7 +14,8 @@ class BrandController extends Controller
      */
     public function index()
     {
-        return view('brands');
+        $brands=Brand::all(); 
+        return view('brands',compact('brands'));
     }
 
     /**
@@ -34,7 +36,8 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Brand::create($request->all());
+        return redirect()->back();
     }
 
     /**
