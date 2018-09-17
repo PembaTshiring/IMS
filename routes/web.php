@@ -22,3 +22,4 @@ Route::resource('brands', 'BrandController');
 Route::resource('categories', 'CategoryController');
 Route::resource('products', 'ProductController');
 Route::resource('orders', 'OrderController');
+Route::post('brand-update','BrandController@brandUpdate')->name('brand.update');

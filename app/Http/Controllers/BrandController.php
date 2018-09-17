@@ -14,7 +14,7 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $brands=Brand::all(); 
+        $brands=Brand::paginate(10); 
         return view('brands',compact('brands'));
     }
 
@@ -62,16 +62,10 @@ class BrandController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function brandUpdate(Request $request)
     {
-        //
+       Brand::where('brand_id',$request->id)->update(['brand_name' => $request->brand_name,'brand_status' => $request->brand_status]);
+        return redirect()->back();
     }
 
     /**
@@ -82,6 +76,7 @@ class BrandController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $brand=Brand::wherebrand_id($id)->delete();
+        return redirect()->back();
     }
 }

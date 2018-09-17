@@ -106,18 +106,24 @@
     <script src="{{ asset('js/app.js') }}"></script>
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> --}}
-    {{-- <script>
-      $('#edit').on('show.bs.modal', function (event) {
-      var button = $(event.relatedTarget) 
-      var title = button.data('brandname') 
-      var description = button.data('mydescription') 
-      var cat_id = button.data('catid') 
+    <script>
+      $('#editBrandModel').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget)
+      var id=button.data('id') 
+      var name = button.data('name') 
+      var status = button.data('status') 
       var modal = $(this)
-      modal.find('.modal-body #name').val(title);
-      modal.find('.modal-body #des').val(description);
-      modal.find('.modal-body #cat_id').val(cat_id);
+      modal.find('.modal-body #id').val(id);
+      modal.find('.modal-body #name').val(name);
+      modal.find('.modal-body #status').val(status);
 })
-    </script> --}}
+    </script>
+    <script>
+    $(".delete").on("submit", function(){
+        return confirm("Are you sure you want to delete?");
+    });
+    </script>
+    
 
 
 </body>
