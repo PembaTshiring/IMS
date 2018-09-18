@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Brand;
+use App\Category;
+use App\Product;
+
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -12,8 +16,11 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('products');
+    {   
+        $products=Product::all();
+        $categories=Category::pluck('category_id','category_name')->all();
+        $brands=Brand::pluck('brand_id','brand_name')->all();
+        return view('products',compact('categories','brands','products'));
     }
 
     /**
@@ -34,7 +41,15 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $input=$request->all();
+        if ($file=$request->file('product_image')) {
+            $name=time().$file->getClientOriginalName();
+            $file->move('images',$name);
+            $input['product_image']=$name;
+        }
+        Product::create($input);
+        return redirect()->back();
     }
 
     /**
