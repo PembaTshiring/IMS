@@ -119,6 +119,18 @@
 })
     </script>
     <script>
+            $('#editcategoryModel').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+            var id=button.data('id') 
+            var name = button.data('name') 
+            var status = button.data('status') 
+            var modal = $(this)
+            modal.find('.modal-body #id').val(id);
+            modal.find('.modal-body #name').val(name);
+            modal.find('.modal-body #status').val(status);
+      })
+          </script>
+    <script>
     $(".delete").on("submit", function(){
         return confirm("Are you sure you want to delete?");
     });

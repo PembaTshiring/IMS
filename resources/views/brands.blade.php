@@ -51,7 +51,7 @@
                                             <a type="button" data-toggle="modal" data-target="#editBrandModel" data-id="{{$brand->brand_id}}" data-name="{{$brand->brand_name}}" data-status="{{ $brand->brand_status }}"> 
                                             <i class="glyphicon glyphicon-edit"></i> Edit</a>
                                         </li>
-                                        <li>    
+                                        <li>   
                                             {!! Form::open(['method'=>'DELETE', 'class'=>'delete','action'=>['BrandController@destroy',$brand->brand_id]]) !!}
                                             {!!Form::submit('Delete',['class'=>'btn btn-danger btn-sm']) !!}
                                             {!!Form::close()!!}

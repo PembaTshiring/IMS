@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Category;
 
 class CategoryController extends Controller
 {
@@ -13,7 +14,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('categories');
+        $categories=Category::paginate(10); 
+        return view('categories',compact('categories'));
     }
 
     /**
@@ -34,7 +36,8 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Category::create($request->all());
+        return redirect()->back();
     }
 
     /**
@@ -59,6 +62,12 @@ class CategoryController extends Controller
         //
     }
 
+    public function categoryUpdate(Request $request)
+    {
+       Category::where('category_id',$request->id)->update(['category_name' => $request->category_name,'category_status' => $request->category_status]);
+        return redirect()->back();
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -79,6 +88,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $brand=Category::wherecategory_id($id)->delete();
+        return redirect()->back();
     }
 }
