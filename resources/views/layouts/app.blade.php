@@ -126,8 +126,8 @@
             var code = button.data('code') 
             var quantity = button.data('quantity') 
             var rate = button.data('rate') 
-            var brandname = button.data('brandname') 
-            var categoryname = button.data('categoryname') 
+            var brandid = button.data('brandid') 
+            var categoryid = button.data('categoryid') 
             var status = button.data('status') 
             var modal = $(this)
             modal.find('.modal-body #id').val(id);
@@ -135,8 +135,8 @@
             modal.find('.modal-body #code').val(code);
             modal.find('.modal-body #quantity').val(quantity);
             modal.find('.modal-body #rate').val(rate);
-            modal.find('.modal-body #brandname').val(brandname);
-            modal.find('.modal-body #categoryname').val(categoryname);
+            modal.find('.modal-body #brandid').val(brandid);
+            modal.find('.modal-body #categoryid').val(categoryid);
             modal.find('.modal-body #status').val(status);
       })
     </script>

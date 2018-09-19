@@ -64,8 +64,8 @@
                                                 data-code="{{$product->product_code}}" 
                                                 data-quantity="{{$product->product_quantity}}" 
                                                 data-rate="{{$product->product_rate}}" 
-                                                data-brandname="{{$product->brands->brand_name}}" 
-                                                data-cateogryname="{{$product->categories->category_name}}" 
+                                                data-brandid="{{$product->brand_id}}" 
+                                                data-categoryid="{{$product->category_id}}" 
                                                 data-status="{{$product->product_status}}"> <i class="glyphicon glyphicon-edit"></i> Edit</a></li>
                                             <li>
                                                 {!! Form::open(['method'=>'DELETE', 'class'=>'delete','action'=>['ProductController@destroy',$product->product_id]]) !!}
@@ -175,10 +175,8 @@
   
                     <!-- Tab panes -->
                     <div class="tab-content">
-  
-                        
                       <div role="tabpanel" class="tab-pane active" id="photo">
-                          <form action="php_action/editProductImage.php" method="POST" id="updateProductImageForm" class="form-horizontal" enctype="multipart/form-data">
+                          <form action="{{route('product.update')}}" method="POST" id="updateProductImageForm" class="form-horizontal" enctype="multipart/form-data">
   
                           <br />
                           <div id="edit-productPhoto-messages"></div>
@@ -214,6 +212,8 @@
                         <!-- /form -->
                       </div>
                       <!-- product image -->
+
+
                       <div role="tabpanel" class="tab-pane" id="productInfo">
                           <form class="form-horizontal" id="editProductForm" action="php_action/editProduct.php" method="POST">				    
                           <br />
@@ -254,23 +254,27 @@
                       </div> <!-- /form-group-->	     	        
   
                       <div class="form-group">
-                          <label for="editBrandName" class="col-sm-3 control-label">Brand Name: </label>
-                          <label class="col-sm-1 control-label">: </label>
-                              <div class="col-sm-8">
-                                <select class="form-control" id="brandname" name="brandname">
-                                    <option value="">~~SELECT~~</option>
-                                </select>
-                              </div>
-                      </div> <!-- /form-group-->	
+                          <div class="row">
+                              <div class="col-sm-3 control-label">
+                                    {!! Form::label('brandid','Brand:')!!}
+                                </div>
+                                <label class="col-sm-1 control-label">: </label>
+                                <div class="col-md-8">
+                                    {!! Form::select('brandid',[''=>'Choose Category'] + $brands ,null,['class'=>'form-control'])!!}
+                                </div>
+                            </div>
+                                </div> <!-- /form-group-->	
   
                       <div class="form-group">
-                          <label for="editCategoryName" class="col-sm-3 control-label">Category Name: </label>
-                          <label class="col-sm-1 control-label">: </label>
-                              <div class="col-sm-8">
-                                <select type="text" class="form-control" id="categoryname" name="categoryname" >
-                                    <option value="">~~SELECT~~</option>
-                                </select>
+                            <div class="row">
+                                    <div class="col-sm-3 control-label">
+                                    {!! Form::label('categoryid','Category:')!!}
+                                </div>
+                                <label class="col-sm-1 control-label">: </label>
+                                <div class="col-md-8">
+                                    {!! Form::select('categoryid',[''=>'Choose Category'] + $categories ,null,['class'=>'form-control'])!!}
                               </div>
+                        </div>
                       </div> <!-- /form-group-->					        	         	       
   
                       <div class="form-group">
