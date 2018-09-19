@@ -18,8 +18,8 @@ class ProductController extends Controller
     public function index()
     {   
         $products=Product::all();
-        $categories=Category::pluck('category_id','category_name')->all();
-        $brands=Brand::pluck('brand_id','brand_name')->all();
+        $categories=Category::pluck('category_name','category_id')->all();
+        $brands=Brand::pluck('brand_name','brand_id')->all();
         return view('products',compact('categories','brands','products'));
     }
 
@@ -81,9 +81,16 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function productUpdate(Request $request)
     {
-        //
+        $input=Product::all();
+        if ($file=$request->file('product_image')) {
+            $name=time().$file->getClientOriginalName();
+            $file->move('images',$name);
+            $input['product_image']=$name;
+        }
+        product()->whereproduct_id($request->product_id)->update($input);
+        return redirect()->back();
     }
 
     /**
@@ -94,6 +101,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Product::whereproduct_id($id)->delete();
+        return redirect()->back();
     }
 }

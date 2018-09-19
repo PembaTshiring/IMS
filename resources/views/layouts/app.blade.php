@@ -101,7 +101,7 @@
     </div>
     
     @yield('content')
-
+    
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -119,17 +119,27 @@
 })
     </script>
     <script>
-            $('#editcategoryModel').on('show.bs.modal', function (event) {
+            $('#editProductModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget)
             var id=button.data('id') 
             var name = button.data('name') 
+            var code = button.data('code') 
+            var quantity = button.data('quantity') 
+            var rate = button.data('rate') 
+            var brandname = button.data('brandname') 
+            var categoryname = button.data('categoryname') 
             var status = button.data('status') 
             var modal = $(this)
             modal.find('.modal-body #id').val(id);
             modal.find('.modal-body #name').val(name);
+            modal.find('.modal-body #code').val(code);
+            modal.find('.modal-body #quantity').val(quantity);
+            modal.find('.modal-body #rate').val(rate);
+            modal.find('.modal-body #brandname').val(brandname);
+            modal.find('.modal-body #categoryname').val(categoryname);
             modal.find('.modal-body #status').val(status);
       })
-          </script>
+    </script>
     <script>
     $(".delete").on("submit", function(){
         return confirm("Are you sure you want to delete?");

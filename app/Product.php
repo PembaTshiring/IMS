@@ -25,12 +25,12 @@ class Product extends Model
     
     public function categories()
     {
-        return $this->belongsTo('App\Category');
+        return $this->hasOne('App\Category','category_id','category_id');
     }
 
     public function brands()
     {
-        return $this->belongsTo('App\Brand');
+        return $this->hasOne('App\Brand', 'brand_id', 'brand_id');
     }
 
 }
