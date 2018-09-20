@@ -64,8 +64,8 @@
                                                 data-code="{{$product->product_code}}" 
                                                 data-quantity="{{$product->product_quantity}}" 
                                                 data-rate="{{$product->product_rate}}" 
-                                                data-brandid="{{$product->brand_id}}" 
-                                                data-categoryid="{{$product->category_id}}" 
+                                                data-brand_id="{{$product->brand_id}}" 
+                                                data-category_id="{{$product->category_id}}" 
                                                 data-status="{{$product->product_status}}"> <i class="glyphicon glyphicon-edit"></i> Edit</a></li>
                                             <li>
                                                 {!! Form::open(['method'=>'DELETE', 'class'=>'delete','action'=>['ProductController@destroy',$product->product_id]]) !!}
@@ -160,7 +160,6 @@
 <div class="modal fade" id="editProductModal" tabindex="-1" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
-                  
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <h4 class="modal-title"><i class="fa fa-edit"></i> Edit Product</h4>
@@ -177,133 +176,127 @@
                     <div class="tab-content">
                       <div role="tabpanel" class="tab-pane active" id="photo">
                           <form action="{{route('product.update')}}" method="POST" id="updateProductImageForm" class="form-horizontal" enctype="multipart/form-data">
-  
-                          <br />
+                            <br />
                           <div id="edit-productPhoto-messages"></div>
   
                           <div class="form-group">
-                          <label for="editProductImage" class="col-sm-3 control-label">Product Image: </label>
+                          <label for="editProductImage" class="col-sm-3 control-label">Edit the Image: </label>
                           <label class="col-sm-1 control-label">: </label>
                               <div class="col-sm-8">							    				   
-                                <img src="" id="getProductImage" class="thumbnail" style="width:250px; height:250px;" />
+                                <img src="https://via.placeholder.com/400x400" id="getProductImage" class="thumbnail" style="width:250px; height:250px;" />
                               </div>
-                      </div> <!-- /form-group-->	     	           	       
-                          
-                        <div class="form-group">
-                          <label for="editProductImage" class="col-sm-3 control-label">Select Photo: </label>
-                          <label class="col-sm-1 control-label">: </label>
-                              <div class="col-sm-8">
-                                  <!-- the avatar markup -->
-                                      <div id="kv-avatar-errors-1" class="center-block" style="display:none;"></div>							
-                                  <div class="kv-avatar center-block">					        
-                                      <input type="file" class="form-control" id="editProductImage" placeholder="Product Name" name="editProductImage" class="file-loading" style="width:auto;"/>
-                                  </div>
-                                
-                              </div>
-                      </div> <!-- /form-group-->	     	           	       
-  
-                      <div class="modal-footer editProductPhotoFooter">
-                          <button type="button" class="btn btn-default" data-dismiss="modal"> <i class="glyphicon glyphicon-remove-sign"></i> Close</button>
-                          
-                          <!-- <button type="submit" class="btn btn-success" id="editProductImageBtn" data-loading-text="Loading..."> <i class="glyphicon glyphicon-ok-sign"></i> Save Changes</button> -->
-                        </div>
-                        <!-- /modal-footer -->
-                        </form>
+                            </div> <!-- /form-group-->
+                            
+                            
+                          </form>
                         <!-- /form -->
                       </div>
                       <!-- product image -->
 
 
                       <div role="tabpanel" class="tab-pane" id="productInfo">
-                          <form class="form-horizontal" id="editProductForm" action="php_action/editProduct.php" method="POST">				    
-                          <br />
-  
-                          <div id="edit-product-messages"></div>
-  
-                          <div class="form-group">
-                          <label for="editProductName" class="col-sm-3 control-label">Product Name: </label>
-                          <label class="col-sm-1 control-label">: </label>
-                              <div class="col-sm-8">
-                                <input type="text" class="form-control" id="name" placeholder="Product Name" name="editProductName" autocomplete="off">
-                              </div>
-                      </div> <!-- /form-group-->
-  
-                      <div class="form-group">
-                          <label for="editProductCode" class="col-sm-3 control-label">Product Code: </label>
-                          <label class="col-sm-1 control-label">: </label>
-                              <div class="col-sm-8">
-                                <input type="text" class="form-control" id="code" placeholder="Product Code" name="editProductCode" autocomplete="off">
-                              </div>
-                      </div> <!-- /form-group-->
-  
-  
-                      <div class="form-group">
-                          <label for="editQuantity" class="col-sm-3 control-label">Quantity: </label>
-                          <label class="col-sm-1 control-label">: </label>
-                              <div class="col-sm-8">
-                                <input type="text" class="form-control" id="quantity" placeholder="Quantity" name="editQuantity" autocomplete="off">
-                              </div>
-                      </div> <!-- /form-group-->	        	 
-  
-                      <div class="form-group">
-                          <label for="editRate" class="col-sm-3 control-label">Rate: </label>
-                          <label class="col-sm-1 control-label">: </label>
-                              <div class="col-sm-8">
-                                <input type="text" class="form-control" id="rate" placeholder="Rate" name="editRate" autocomplete="off">
-                              </div>
-                      </div> <!-- /form-group-->	     	        
-  
-                      <div class="form-group">
-                          <div class="row">
-                              <div class="col-sm-3 control-label">
-                                    {!! Form::label('brandid','Brand:')!!}
+                            <form class="form-horizontal" id="editProductForm" action="{{route('product.update')}}" method="POST" enctype="multipart/form-data">
+                                    {{csrf_field()}}<br />
+                                <div id="edit-product-messages"></div>
+                                <!-- /form-group-->
+                                <div class="form-group">
+                                        <label for="editProductImage" class="col-sm-3 control-label">Select Photo: </label>
+                                        <label class="col-sm-1 control-label">: </label>
+                                        <div class="col-sm-8">
+                                            <!-- the avatar markup -->
+                                            <div id="kv-avatar-errors-1" class="center-block" style="display:none;"></div>
+                                            <div class="kv-avatar center-block">
+                                                <input type="file" id="editProductImage" placeholder="Product Name" name="product_image" class="file-loading" style="width:auto;" />
+                                            </div>
+                                
+                                        </div>
+                                    </div>
+
+                                <div class="form-group">
+                                        <input type="hidden" id="id" name="id">
+                                    <label for="editProductName" class="col-sm-3 control-label">Product Name: </label>
+                                    <label class="col-sm-1 control-label">: </label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="name" placeholder="Product Name" name="product_name" autocomplete="off">
+                                    </div>
                                 </div>
-                                <label class="col-sm-1 control-label">: </label>
-                                <div class="col-md-8">
-                                    {!! Form::select('brandid',[''=>'Choose Category'] + $brands ,null,['class'=>'form-control'])!!}
+                                <!-- /form-group-->
+                            
+                                <div class="form-group">
+                                    <label for="editProductCode" class="col-sm-3 control-label">Product Code: </label>
+                                    <label class="col-sm-1 control-label">: </label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="code" placeholder="Product Code" name="product_code" autocomplete="off">
+                                    </div>
                                 </div>
-                            </div>
-                                </div> <!-- /form-group-->	
-  
-                      <div class="form-group">
-                            <div class="row">
+                                <!-- /form-group-->
+                            
+                                <div class="form-group">
+                                    <label for="editQuantity" class="col-sm-3 control-label">Quantity: </label>
+                                    <label class="col-sm-1 control-label">: </label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="quantity" placeholder="Quantity" name="product_quantity" autocomplete="off">
+                                    </div>
+                                </div>
+                                <!-- /form-group-->
+                            
+                                <div class="form-group">
+                                    <label for="editRate" class="col-sm-3 control-label">Rate: </label>
+                                    <label class="col-sm-1 control-label">: </label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="rate" placeholder="Rate" name="product_rate" autocomplete="off">
+                                    </div>
+                                </div>
+                                <!-- /form-group-->
+                            
+                                <div class="form-group">
                                     <div class="col-sm-3 control-label">
-                                    {!! Form::label('categoryid','Category:')!!}
+                                        {!! Form::label('brand_id','Brand:')!!}
+                                    </div>
+                                    <label class="col-sm-1 control-label">: </label>
+                                    <div class="col-md-8">
+                                        {!! Form::select('brand_id',[''=>'Choose Category'] + $brands ,null,['class'=>'form-control'])!!}
+                                    </div>
                                 </div>
-                                <label class="col-sm-1 control-label">: </label>
-                                <div class="col-md-8">
-                                    {!! Form::select('categoryid',[''=>'Choose Category'] + $categories ,null,['class'=>'form-control'])!!}
-                              </div>
-                        </div>
-                      </div> <!-- /form-group-->					        	         	       
-  
-                      <div class="form-group">
-                          <label for="editProductStatus" class="col-sm-3 control-label">Status: </label>
-                          <label class="col-sm-1 control-label">: </label>
-                              <div class="col-sm-8">
-                                <select class="form-control" id="status" name="editProductStatus">
-                                    <option value="">~~SELECT~~</option>
-                                    <option value="1">Available</option>
-                                    <option value="2">Not Available</option>
-                                </select>
-                              </div>
-                      </div> <!-- /form-group-->	         	        
-  
-                      <div class="modal-footer editProductFooter">
-                          <button type="button" class="btn btn-default" data-dismiss="modal"> <i class="glyphicon glyphicon-remove-sign"></i> Close</button>
-                          
-                          <button type="submit" class="btn btn-success" id="editProductBtn" data-loading-text="Loading..."> <i class="glyphicon glyphicon-ok-sign"></i> Save Changes</button>
-                        </div> <!-- /modal-footer -->				     
-                      </form> <!-- /.form -->				     	
+                                <!-- /form-group-->
+                            
+                                <div class="form-group">
+                                    <div class="col-sm-3 control-label">
+                                        {!! Form::label('category_id','Category:')!!}
+                                    </div>
+                                    <label class="col-sm-1 control-label">: </label>
+                                    <div class="col-md-8">
+                                        {!! Form::select('category_id',[''=>'Choose Category'] + $categories ,null,['class'=>'form-control'])!!}
+                                    </div>
+                                </div>
+                                <!-- /form-group-->
+                            
+                                <div class="form-group">
+                                    <label for="editProductStatus" class="col-sm-3 control-label">Status: </label>
+                                    <label class="col-sm-1 control-label">: </label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" id="status" name="product_status">
+                                            <option value="">~~SELECT~~</option>
+                                            <option value="1">Available</option>
+                                            <option value="2">Not Available</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- /form-group-->
+                            
+                                <div class="modal-footer editProductFooter">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal"> <i class="glyphicon glyphicon-remove-sign"></i> Close</button>
+                            
+                                    <button type="submit" class="btn btn-success" id="editProductBtn" data-loading-text="Loading..."> <i class="glyphicon glyphicon-ok-sign"></i> Save Changes</button>
+                                </div>
+                                <!-- /modal-footer -->
+                            </form>
+                            <!-- /.form -->				     	
                       </div>    
                       <!-- /product info -->
                     </div>
-  
                   </div>
-                
             </div> <!-- /modal-body -->
-                      
-           
       </div>
       <!-- /modal-content -->
     </div>

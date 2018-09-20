@@ -83,14 +83,39 @@ class ProductController extends Controller
      */
     public function productUpdate(Request $request)
     {
-        $input=Product::all();
+       
+        // Product::where('product_id',$request->id)->update([
+        //     'product_code' => $request->product_code,
+        //     'product_name' => $request->product_name,
+        //     'product_quantity' => $request->product_quantity,
+        //     'product_rate' => $request->product_rate,
+        //     'brand_id' => $request->brand_id,
+        //     'category_id' => $request->category_id,
+        //     'product_image' => $request->product_image,
+        //     'product_status' => $request->product_status
+        //     ]);
+        
+    
+        $data=Product::where('product_id',$request->id);
+
         if ($file=$request->file('product_image')) {
             $name=time().$file->getClientOriginalName();
             $file->move('images',$name);
             $input['product_image']=$name;
         }
-        product()->whereproduct_id($request->product_id)->update($input);
-        return redirect()->back();
+        $data->update([
+            'product_code' => $request->product_code,
+            'product_name' => $request->product_name,
+            'product_quantity' => $request->product_quantity,
+            'product_rate' => $request->product_rate,
+            'brand_id' => $request->brand_id,
+            'category_id' => $request->category_id,
+            'product_image' => $name,
+            'product_status' => $request->product_status
+        ]);
+        
+        
+        
     }
 
     /**

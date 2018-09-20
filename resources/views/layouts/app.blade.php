@@ -122,21 +122,23 @@
             $('#editProductModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget)
             var id=button.data('id') 
+            var image=button.data('image')
             var name = button.data('name') 
             var code = button.data('code') 
             var quantity = button.data('quantity') 
             var rate = button.data('rate') 
-            var brandid = button.data('brandid') 
-            var categoryid = button.data('categoryid') 
+            var brand_id = button.data('brand_id') 
+            var category_id = button.data('category_id') 
             var status = button.data('status') 
             var modal = $(this)
             modal.find('.modal-body #id').val(id);
+            modal.find('.modal-body #image').val(image);
             modal.find('.modal-body #name').val(name);
             modal.find('.modal-body #code').val(code);
             modal.find('.modal-body #quantity').val(quantity);
             modal.find('.modal-body #rate').val(rate);
-            modal.find('.modal-body #brandid').val(brandid);
-            modal.find('.modal-body #categoryid').val(categoryid);
+            modal.find('.modal-body #brand_id').val(brand_id);
+            modal.find('.modal-body #category_id').val(category_id);
             modal.find('.modal-body #status').val(status);
       })
     </script>
