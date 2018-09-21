@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Product;
 
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return view('vieworders');
+        return view('addOrders');
     }
 
     /**
@@ -23,7 +24,8 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        $products=Product::whereproduct_status(1)->pluck('product_id','product_name');
+        return view('addOrders',compact('products'));
     }
 
     /**

@@ -113,6 +113,8 @@ class ProductController extends Controller
             'product_image' => $name,
             'product_status' => $request->product_status
         ]);
+
+        return redirect()->back();
         
         
         
