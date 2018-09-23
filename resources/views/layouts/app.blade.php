@@ -162,6 +162,36 @@
         $('#manageBrandTable').DataTable();
         } );
     </script>
+    <script>
+    $(document).ready(function () {
+    var counter = 0;
+
+    $("#addrow").on("click", function () {
+        var newRow = $("<tr>");
+        var cols = "";
+        
+        cols += '<td><div class="form-group"><div class="col-lg-10"><select class="form-control" name="product_name"><option value="" selected="selected">Choose Product</option><option value="7">image updated</option></select></div></div></td>';
+        cols += '<td><div class="form-group"><div class="col-lg-10"><input class="form-control" disabled="" name="rate" type="text"></div></div></td>';
+        cols += '<td><div class="form-group"><div class="col-lg-10"><input class="form-control" name="quantity" type="text"></div></div></td>';
+        cols += '<td><div class="form-group"><div class="col-lg-10"><input class="form-control" name="quantity" type="text"></div></div></td>';
+
+        cols += '<td><button class="ibtnDel btn btn-default removeProductRowBtn" type="button" id="removeProductRowBtn" onclick="removeProductRow(1)"><i class="glyphicon glyphicon-trash"></i></button></i></td>';
+        newRow.append(cols);
+        $("table.order-list").append(newRow);
+        counter++;
+    });
+
+
+
+    $("table.order-list").on("click", ".ibtnDel", function (event) {
+        $(this).closest("tr").remove();       
+        counter -= 1
+    });
+
+
+});</script>
+    
+
     
 </body>
 </html>

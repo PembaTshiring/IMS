@@ -31,6 +31,10 @@ class Product extends Model
     public function brands()
     {
         return $this->hasOne('App\Brand', 'brand_id', 'brand_id');
+    } 
+    public function orders()
+    {
+        return $this->belongsToMany('App\Order', 'order_item', 'order_id', 'product_id');
     }
 
 }

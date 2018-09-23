@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Product;
+use App\Order;
 
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return view('addOrders');
+        return view('manageorders');
     }
 
     /**
@@ -24,7 +25,9 @@ class OrderController extends Controller
      */
     public function create()
     {
-        $products=Product::whereproduct_status(1)->pluck('product_id','product_name');
+        $products_data=Product::whereproduct_status(1)->pluck('product_name','product_id');
+        $products=$products_data->toArray();
+        // dd($products);
         return view('addOrders',compact('products'));
     }
 
