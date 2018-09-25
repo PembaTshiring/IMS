@@ -39,7 +39,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $request->all();
     }
 
     /**
@@ -88,5 +88,14 @@ class OrderController extends Controller
     }
     public function addorder(){
         return view('addOrders');
+    }
+    public function fetchProductData(Request $request){
+    //    if ($request->ajax()){
+        // $product_data=Product::where('product_id', $productId)->first();
+        // return response()->json([$product_data]);
+    //    }
+    $product_data=Product::where('product_id', $request->productId)->first();
+    return response()->json([$product_data]);
+    
     }
 }
