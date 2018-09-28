@@ -170,21 +170,48 @@
     var counter = -1;
 
     $("#addrow").on("click", function () {
-        var newRow = $("<tr>");
+        if(tableLength > 0) {		
+		tableRow = $("#productTable tbody tr:last").attr('id');
+		arrayNumber = $("#productTable tbody tr:last").attr('class');
+		count = tableRow.substring(3);	
+		count = Number(count) + 1;
+		arrayNumber = Number(arrayNumber) + 1;					
+	    }
+        else {
+		// no table row
+		count = 1;
+		arrayNumber = 0;
+	    }   
+        
+        $.ajax({
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+		url: "{{route('fetchSelectedProductData')}}",
+		type: 'post',
+		dataType: 'json',
+		success:function(response) {
+
+        var newRow = $("<tr id='row"+count+"' class="+arrayNumber+">");
         var cols = "";
         
-        cols += '<td><div class="form-group"><div class="col-lg-10"><select class="form-control" name="product_name"><option value="" selected="selected">Choose Product</option><option value="7">image updated</option></select></div></div></td>';
-        cols += '<td><div class="form-group"><div class="col-lg-10"><input class="form-control" disabled="" name="rate" type="text"></div></div></td>';
-        cols += '<td><div class="form-group"><div class="col-lg-10"><input class="form-control" name="quantity" type="text"></div></div></td>';
-        cols += '<td><div class="form-group"><div class="col-lg-10"><input class="form-control" name="quantity" type="text"></div></div></td>';
-
-        cols += '<td><button class="ibtnDel btn btn-default removeProductRowBtn" type="button" id="removeProductRowBtn" onclick="removeProductRow(1)"><i class="glyphicon glyphicon-trash"></i></button></i></td>';
+        cols += '<td><div class="form-group"><div class="col-lg-10"><select class="form-control" id="selectedProduct'+count+'" onchange="getProductData('+count+')" name="product_name[]"><option value="" selected="selected">Choose Product</option>';
+                // console.log(response);
+                    $.each(response, function(index, value) {
+							cols += '<option value="'+value['product_id']+'">'+value['product_name']+'</option>';							
+						});
+        cols +='</select></div></div></td>';        
+        cols += '<td><div class="form-group"><div class="col-lg-10"><input class="form-control" disabled="true" id="productRate'+count+'" name="rate[]" type="text"><input type="hidden" name="rateValue[]" id="rateValue'+count+'" autocomplete="off" class="form-control" /></div></div></td>';
+        cols += '<td><div class="form-group"><div class="col-lg-10"><input class="form-control" name="quantity[]" type="number" id="productQuantity'+count+'" onkeyup="getTotal('+count+')"></div></div></td>';
+        cols += '<td><div class="form-group"><div class="col-lg-10"><input type="text" name="total[]" id="total'+count+'" autocomplete="off" class="form-control" disabled="true" /><input type="hidden" name="totalValue[]" id="totalValue'+count+'" autocomplete="off" class="form-control" /></div></div></td>';
+        cols += '<td><button class="ibtnDel btn btn-default" type="button" id="ibtnDel"><i class="glyphicon glyphicon-trash"></i></button></i></td>';
+        
         newRow.append(cols);
         $("table.order-list").append(newRow);
         counter++;
+        
+        }});
     });
-
-
 
     $("table.order-list").on("click", ".ibtnDel", function (event) {
         $(this).closest("tr").remove();       
@@ -194,6 +221,9 @@
 
 });
 </script>
+
+
+
 
 <script type="text/javascript">
     function getProductData(row = null) {
@@ -326,83 +356,6 @@ function paidAmount() {
 		$("#dueValue").val(dueAmount);
 	} // /if
 } // /paid amoutn function
-
-
-</script>
-
-{{-- <script>
-// select on product data
-function getProductData(row = null) {
-	if(row) {
-		var productId = $("#productName"+row).val();		
-		
-		if(productId == "") {
-			$("#rate"+row).val("");
-
-			$("#quantity"+row).val("");						
-			$("#total"+row).val("");
-
-			// remove check if product name is selected
-			// var tableProductLength = $("#productTable tbody tr").length;			
-			// for(x = 0; x < tableProductLength; x++) {
-			// 	var tr = $("#productTable tbody tr")[x];
-			// 	var count = $(tr).attr('id');
-			// 	count = count.substring(3);
-
-			// 	var productValue = $("#productName"+row).val()
-
-			// 	if($("#productName"+count).val() == "") {					
-			// 		$("#productName"+count).find("#changeProduct"+productId).removeClass('div-hide');	
-			// 		console.log("#changeProduct"+count);
-			// 	}											
-			// } // /for
-
-		} else {
-			$.ajax({
-				url: '{{route('fetchProductData')}}',
-				type: 'post',
-				data: {productId : productId},
-				dataType: 'json',
-				success:function(response) {
-					// setting the rate value into the rate input field
-					
-					$("#rate"+row).val(response.rate);
-					$("#rateValue"+row).val(response.rate);
-
-					$("#quantity"+row).val(1);
-
-					var total = Number(response.rate) * 1;
-					total = total.toFixed(2);
-					$("#total"+row).val(total);
-					$("#totalValue"+row).val(total);
-					
-					// check if product name is selected
-					// var tableProductLength = $("#productTable tbody tr").length;					
-					// for(x = 0; x < tableProductLength; x++) {
-					// 	var tr = $("#productTable tbody tr")[x];
-					// 	var count = $(tr).attr('id');
-					// 	count = count.substring(3);
-
-					// 	var productValue = $("#productName"+row).val()
-
-					// 	if($("#productName"+count).val() != productValue) {
-					// 		// $("#productName"+count+" #changeProduct"+count).addClass('div-hide');	
-					// 		$("#productName"+count).find("#changeProduct"+productId).addClass('div-hide');								
-					// 		console.log("#changeProduct"+count);
-					// 	}											
-					// } // /for
-			
-					// subAmount();
-				} // /success
-			}); // /ajax function to fetch the product data	
-		}
-				
-	} else {
-		alert('no row! please refresh the page');
-	}
-} // /select on product data
-</script> --}}
-
-    
+</script>    
 </body>
 </html>

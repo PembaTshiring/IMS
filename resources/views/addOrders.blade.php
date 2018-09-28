@@ -15,7 +15,7 @@
         <div class="form-group">
             {!! Form::label('date', 'Date', ['class' => 'col-lg-2 control-label']) !!}
             <div class="col-lg-10">
-                {!! Form::date('date', \Carbon\Carbon::now(), ['class' => 'form-control',]) !!}
+                {!! Form::date('order_date', \Carbon\Carbon::now(), ['class' => 'form-control',]) !!}
             </div>
         </div>
         <div class="form-group">
@@ -41,12 +41,15 @@
                     </tr>
             </thead>
             <tbody>
-                @for ($x = 1; $x <4; $x++)
-                <tr id='row{{$x}}'>
+                {{-- @php
+                    $arrayNumber=0;    
+                @endphp --}}
+                {{-- @for ($x = 1; $x <4; $x++) --}}
+                <tr id='row1' class="0">
                     <td>
                         <div class="form-group">
                             <div class="col-lg-10">
-                                    {!! Form::select('product_name[]',[''=>'Choose Product'] + $products ,null,['class'=>'form-control','id'=>'selectedProduct'.$x,'onChange'=>"getProductData($x)"])!!}
+                                    {!! Form::select('product_name[]',[''=>'Choose Product'] + $products ,null,['class'=>'form-control','id'=>'selectedProduct1','onChange'=>"getProductData(1)"])!!}
                                 </div>
                         </div>
                     </td>
@@ -54,15 +57,15 @@
                         <div class="form-group">
                             <div class="col-lg-10">
                                 {{-- {!! Form::text('rate[]',$value="$value", ['class' => 'form-control', 'disabled','id'=>"productRate$x",]) !!} --}}
-                                <input class="form-control" disabled="true" id="productRate{{$x}}" name="rate[]" type="text">
-                                <input type="hidden" name="rateValue[]" id="rateValue{{$x}}" autocomplete="off" class="form-control" />
+                                <input class="form-control" disabled="true" id="productRate1" name="rate[]" type="text">
+                                <input type="hidden" name="rateValue[]" id="rateValue1" autocomplete="off" class="form-control" />
                             </div>
                         </div>
                     </td>
                     <td>
                         <div class="form-group">
                             <div class="col-lg-10">
-                                {!! Form::number('quantity', $value = null, ['class' => 'form-control','min'=>'1','id'=>"productQuantity$x",'onkeyup'=>"getTotal($x)"]) !!}
+                                {!! Form::number('quantity[]', $value = null, ['class' => 'form-control','min'=>'1','id'=>"productQuantity1",'onkeyup'=>"getTotal(1)"]) !!}
                             </div>
                         </div>
                     </td>
@@ -70,16 +73,21 @@
                         <div class="form-group">
                             <div class="col-lg-10">
                                 {{-- {!! Form::text('total', $value = null, ['class' => 'form-control', 'disabled']) !!} --}}
-                                <input type="text" name="total[]" id="total{{$x}}" autocomplete="off" class="form-control" disabled="true" />			  					
-			  					<input type="hidden" name="totalValue[]" id="totalValue{{$x}}" autocomplete="off" class="form-control" />
+                                <input type="text" name="total[]" id="total1" autocomplete="off" class="form-control" disabled="true" />			  					
+			  					<input type="hidden" name="totalValue[]" id="totalValue1" autocomplete="off" class="form-control" />
                             </div>
                         </div>
                     </td>
                     <td>
-                            <button class="btn btn-default ibtnDel" type="button" id="ibtnDel"><i class="glyphicon glyphicon-trash"></i></button></i>
+                            {{-- <button class="btn btn-default removeProductRowBtn" type="button" id="removeProductRowBtn" onclick="removeProductRow1"><i class="glyphicon glyphicon-trash"></i></button> --}}
+                            
+                            {{-- <button class="btn btn-default ibtnDel" type="button" id="ibtnDel"><i class="glyphicon glyphicon-trash"></i></button></i> --}}
                     </td>
                 </tr>
-                @endfor
+                {{-- @php
+                    $arrayNumber++;
+                @endphp
+                @endfor --}}
             </tbody>    
         </table>
 
@@ -90,7 +98,7 @@
                 <div class="col-lg-10">
                     {{-- {!! Form::text('sub_amount', $value = null, ['class' => 'form-control col-md-9','disabled']) !!} --}}
                     <input type="text" class="form-control" id="subTotal" name="subTotal" disabled="true" />
-				    <input type="hidden" class="form-control" id="subTotalValue" name="subTotalValue" />
+				    <input type="hidden" class="form-control" id="subTotalValue" name="sub_total" />
                 </div>
         </div>
         <div class="form-group">
@@ -98,7 +106,7 @@
                 <div class="col-lg-10">
                     {{-- {!! Form::text('vat', $value = null, ['class' => 'form-control col-md-9','disabled']) !!} --}}
                     <input type="text" class="form-control" id="vat" name="vat" disabled="true" />
-				    <input type="hidden" class="form-control" id="vatValue" name="vatValue" />
+				    <input type="hidden" class="form-control" id="vatValue" name="vat" />
                 </div>
         </div>
         <div class="form-group">
@@ -106,14 +114,14 @@
                 <div class="col-lg-10">
                     {{-- {!! Form::text('total_amount', $value = null, ['class' => 'form-control col-md-9','disabled']) !!} --}}
                     <input type="text" class="form-control" id="totalAmount" name="totalAmount" disabled="true"/>
-				    <input type="hidden" class="form-control" id="totalAmountValue" name="totalAmountValue" />
+				    <input type="hidden" class="form-control" id="totalAmountValue" name="total_amount" />
                 </div>
         </div>
         <div class="form-group">
                 {!! Form::label('discount', 'Discount', ['class' => 'col-lg-2 control-label']) !!}
                 <div class="col-lg-10">
                     {{-- {!! Form::text('discount', $value = null, ['class' => 'form-control col-md-9']) !!} --}}
-                    <input type="text" class="form-control" id="discount" name="discount" onkeyup="discountFunc()" autocomplete="off" />
+                    <input type="text" class="form-control" id="discount" name="discount" onkeyup="discountFunc()" min="0" autocomplete="off" />
                 </div>
         </div>
         <div class="form-group">
@@ -121,7 +129,7 @@
                 <div class="col-lg-10">
                     {{-- {!! Form::text('grand_total', $value = null, ['class' => 'form-control col-md-9','disabled']) !!} --}}
                     <input type="text" class="form-control" id="grandTotal" name="grandTotal" disabled="true" />
-				    <input type="hidden" class="form-control" id="grandTotalValue" name="grandTotalValue" />
+				    <input type="hidden" class="form-control" id="grandTotalValue" name="grand_total" />
                 </div>
         </div>
         </div>
@@ -138,14 +146,13 @@
                 <div class="col-lg-10">
                     {{-- {!! Form::text('due', $value = null, ['class' => 'form-control col-md-9','disabled']) !!} --}}
                     <input type="text" class="form-control" id="due" name="due" disabled="true" />
-				    <input type="hidden" class="form-control" id="dueValue" name="dueValue" />
+				    <input type="hidden" class="form-control" id="dueValue" name="due" />
                 </div>
         </div>
         <div class="form-group">
                 {!! Form::label('payment_type', 'Payment Type', ['class' => 'col-lg-2 control-label'] )  !!}
                 <div class="col-lg-10">
-                    {{-- {!!  Form::select('payment_type', ['S' => 'Small', 'L' => 'Large', 'XL' => 'Extra Large', '2XL' => '2X Large'],  'S', ['class' => 'form-control' ]) !!} --}}
-                    <select class="form-control" name="paymentType" id="paymentType" >
+                    <select class="form-control" name="payment_type" id="paymentType" >
                         <option value="">~~SELECT~~</option>
                         <option value="1">Cheque</option>
                         <option value="2">Cash</option>
@@ -156,8 +163,7 @@
         <div class="form-group">
                 {!! Form::label('payment_status', 'Payment Status', ['class' => 'col-lg-2 control-label'] )  !!}
                 <div class="col-lg-10">
-                    {{-- {!!  Form::select('payment_status', ['S' => 'Small', 'L' => 'Large', 'XL' => 'Extra Large', '2XL' => '2X Large'],  'S', ['class' => 'form-control' ]) !!} --}}
-                    <select class="form-control" name="paymentStatus" id="paymentStatus">
+                    <select class="form-control" name="payment_status" id="paymentStatus">
                         <option value="">~~SELECT~~</option>
                         <option value="1">Full Payment</option>
                         <option value="2">Advance Payment</option>
@@ -168,8 +174,9 @@
         </div>
         <div class="col-sm-offset-2 col-sm-10">
 			    <button type="button" class="btn btn-default" id="addrow" data-loading-text="Loading..."> <i class="glyphicon glyphicon-plus-sign"></i> Add Row </button>
-
-			      <button type="submit" id="createOrderBtn" data-loading-text="Loading..." class="btn btn-success"><i class="glyphicon glyphicon-ok-sign"></i> Save Changes</button>
+                {{-- <button type="button" class="btn btn-default" onclick="addRow()" id="addRowBtn" data-loading-text="Loading..."> <i class="glyphicon glyphicon-plus-sign"></i> Add Row </button> --}}
+                  
+                <button type="submit" id="createOrderBtn" data-loading-text="Loading..." class="btn btn-success"><i class="glyphicon glyphicon-ok-sign"></i> Save Changes</button>
 
 			      <button type="reset" class="btn btn-default" onclick="resetOrderForm()"><i class="glyphicon glyphicon-erase"></i> Reset</button>
 		</div>

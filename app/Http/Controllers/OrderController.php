@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Product;
 use App\Order;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
@@ -15,7 +16,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return view('manageorders');
+        $orders=Order::all();
+        return view('manageorders',compact('orders'));
     }
 
     /**
@@ -39,7 +41,9 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        return $request->all();
+        $order_info=$request->all();
+        Order::create($order_info);
+        // return $request->all();
     }
 
     /**
@@ -90,12 +94,12 @@ class OrderController extends Controller
         return view('addOrders');
     }
     public function fetchProductData(Request $request){
-    //    if ($request->ajax()){
-        // $product_data=Product::where('product_id', $productId)->first();
-        // return response()->json([$product_data]);
-    //    }
-    $product_data=Product::where('product_id', $request->productId)->first();
+    $product_data=Product::where('product_id', $request->productId)->first()->toArray();
     return response()->json([$product_data]);
     
     }
+    public function fetchSelectedProductData(){
+        $selected_product_data=DB::select('SELECT product_id, product_name FROM products WHERE product_status = 1');
+        return response()->json($selected_product_data);
+        }
 }
