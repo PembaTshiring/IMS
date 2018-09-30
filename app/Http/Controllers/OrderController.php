@@ -17,7 +17,11 @@ class OrderController extends Controller
     public function index()
     {
         $orders=Order::all();
-        return view('manageorders',compact('orders'));
+        foreach ($orders as $order) {
+            // $item_count=Order::whereorder_id($order['order_id'])->count();
+            $item_count[] = DB::table('order_item')->whereorder_id($order->order_id)->count();
+        }
+        return view('manageorders',compact('orders','item_count'));
     }
 
     /**
@@ -42,8 +46,20 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $order_info=$request->all();
-        Order::create($order_info);
-        // return $request->all();
+        $create_order=Order::create($order_info);
+        $insertedId = $create_order->id;
+        for ($x=0; $x < count($request->product_name); $x++) { 
+            DB::table('order_item')->insert(
+                [
+                    'order_id' => $insertedId,
+                    'product_id'=>$request->product_name[$x],
+                    'quantity'=>$request->quantity[$x],
+                    'rate'=> $request->rateValue[$x],
+                    'total'=>$request->totalValue[$x],
+                ]
+            );
+        }
+        return redirect()->action('OrderController@index');
     }
 
     /**

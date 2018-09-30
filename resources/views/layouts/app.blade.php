@@ -162,6 +162,11 @@
         $('#manageBrandTable').DataTable();
         } );
     </script>
+    <script>
+        $(document).ready(function() {
+        $('#manageOrderTable').DataTable();
+        } );
+    </script>
 
 {{-- adding rows --}}
 <script>
@@ -201,7 +206,7 @@
 							cols += '<option value="'+value['product_id']+'">'+value['product_name']+'</option>';							
 						});
         cols +='</select></div></div></td>';        
-        cols += '<td><div class="form-group"><div class="col-lg-10"><input class="form-control" disabled="true" id="productRate'+count+'" name="rate[]" type="text"><input type="hidden" name="rateValue[]" id="rateValue'+count+'" autocomplete="off" class="form-control" /></div></div></td>';
+        cols += '<td><div class="form-group"><div class="col-lg-10"><input type="text" name="rate[]" id="productRate'+count+'" autocomplete="off" class="form-control" disabled="true"><input type="hidden" name="rateValue[]" id="rateValue'+count+'" autocomplete="off" class="form-control" /></div></div></td>';
         cols += '<td><div class="form-group"><div class="col-lg-10"><input class="form-control" name="quantity[]" type="number" id="productQuantity'+count+'" onkeyup="getTotal('+count+')"></div></div></td>';
         cols += '<td><div class="form-group"><div class="col-lg-10"><input type="text" name="total[]" id="total'+count+'" autocomplete="off" class="form-control" disabled="true" /><input type="hidden" name="totalValue[]" id="totalValue'+count+'" autocomplete="off" class="form-control" /></div></div></td>';
         cols += '<td><button class="ibtnDel btn btn-default" type="button" id="ibtnDel"><i class="glyphicon glyphicon-trash"></i></button></i></td>';
@@ -243,6 +248,7 @@
 				success:function(response) { 
                     // return alert(response[0].product_rate);
                     $("#productRate"+row).val(response[0].product_rate);
+                    $("#rateValue"+row).val(response[0].product_rate);
                     $("#productQuantity"+row).val(1);
                     subAmount();
                 }});

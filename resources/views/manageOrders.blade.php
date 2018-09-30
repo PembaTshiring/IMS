@@ -23,13 +23,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($orders as $order)                                    
+                                @php 
+                                $x=0; 
+                                @endphp
+                                @foreach ($orders as $order)                                  
                                 <tr>
                                     <td></td>
                                     <td>{{$order->order_date}}</td>
                                     <td>{{$order->client_name}}</td>
                                     <td>{{$order->client_contact}}</td>
-                                    <td>Total Order Item</td>
+                                    <td>{{$item_count["$x"]}}</td>
                                     @if ($order->payment_status==1)
                                     <td><label class="label label-success">Full Payment</label></td>
                                     @elseif($order->payment_status==2)
@@ -55,7 +58,11 @@
                                         </div>
                                     </td>
                                 </tr>
+                                @php
+                                $x++;
+                                @endphp
                                 @endforeach
                             </tbody>
                         </table>
+
 @endsection
