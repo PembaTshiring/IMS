@@ -27,3 +27,5 @@ Route::post('category-update','CategoryController@categoryUpdate')->name('catego
 Route::post('product-update','ProductController@productUpdate')->name('product.update');
 Route::post('fetch-product-data','OrderController@fetchProductData')->name('fetchProductData');
 Route::post('fetch-selected-product-data','OrderController@fetchSelectedProductData')->name('fetchSelectedProductData');
+Route::get('reports','OrderController@report')->name('reports');
+Route::post('get-order-report','OrderController@getOrderReport')->name('getOrderReport');

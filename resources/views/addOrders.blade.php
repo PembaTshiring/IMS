@@ -15,7 +15,7 @@
         <div class="form-group">
             {!! Form::label('date', 'Date', ['class' => 'col-lg-2 control-label']) !!}
             <div class="col-lg-10">
-                {!! Form::date('order_date', \Carbon\Carbon::now(), ['class' => 'form-control',]) !!}
+                {!! Form::text('order_date', null, ['class' => 'form-control', 'id'=>'orderDate','autocomplete'=>'off' ]) !!}
             </div>
         </div>
         <div class="form-group">

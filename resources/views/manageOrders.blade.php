@@ -47,13 +47,13 @@
                                             Action <span class="caret"></span>
                                           </button>
                                           <ul class="dropdown-menu">
-                                            <li><a href="" id="editOrderModalBtn"> <i class="glyphicon glyphicon-edit"></i> Edit</a></li>
+                                            <li><a href="{{route('orders.edit',$order->order_id)}}" id="editOrderModalBtn"> <i class="glyphicon glyphicon-edit"></i> Edit</a></li>
                                             
-                                            <li><a type="button" data-toggle="modal" id="paymentOrderModalBtn" data-target="#paymentOrderModal" onclick="paymentOrder(9)"> <i class="glyphicon glyphicon-save"></i> Payment</a></li>
+                                            <li><a type="button" data-toggle="modal" id="paymentOrderModalBtn" data-target="#paymentOrderModal" onclick="paymentOrder()"> <i class="glyphicon glyphicon-save"></i> Payment</a></li>
                                     
-                                            <li><a type="button" onclick="printOrder(9)"> <i class="glyphicon glyphicon-print"></i> Print </a></li>
+                                            <li><a type="button" onclick="printOrder()"> <i class="glyphicon glyphicon-print"></i> Print </a></li>
                                             
-                                            <li><a type="button" data-toggle="modal" data-target="#removeOrderModal" id="removeOrderModalBtn" onclick="removeOrder(9)"> <i class="glyphicon glyphicon-trash"></i> Remove</a></li>       
+                                            <li><a type="button" data-toggle="modal" data-target="#removeOrderModal" id="removeOrderModalBtn" onclick="removeOrder()"> <i class="glyphicon glyphicon-trash"></i> Remove</a></li>       
                                           </ul>
                                         </div>
                                     </td>

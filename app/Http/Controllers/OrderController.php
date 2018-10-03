@@ -62,15 +62,51 @@ class OrderController extends Controller
         return redirect()->action('OrderController@index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+    public function report(){
+        return view('reports');
+    }
+
+    public function getOrderReport(Request $req){
+        $startDate=$req->startDate;
+        $endDate=$req->endDate;
+        // $report=DB::select("SELECT * FROM orders WHERE order_date >= '$startDate' AND order_date <= '$endDate' AND order_status=1 ");
+        $reports = DB::table('orders')->where([
+            ['order_date', '>=', $startDate],
+            ['order_date', '<=', $endDate],
+            ['order_status', '=', 1]
+        ])->get(['order_date','client_name','client_contact','grand_total'])->toArray();
+
+        $table = '
+	    <table border="1" cellspacing="0" cellpadding="0" style="width:100%;">
+		<tr>
+			<th>Order Date</th>
+			<th>Client Name</th>
+			<th>Contact</th>
+			<th>Grand Total</th>
+		</tr>
+
+		<tr>';
+		$totalAmount = "";
+		foreach ($reports as $report){
+			$table .= '<tr>
+				<td><center>'.$report->order_date.'</center></td>
+				<td><center>'.$report->client_name.'</center></td>
+				<td><center>'.$report->client_contact.'</center></td>
+				<td><center>'.$report->grand_total.'</center></td>
+			</tr>';	
+			$totalAmount += $report->grand_total;
+		}
+		$table .= '
+		</tr>
+
+		<tr>
+			<td colspan="3"><center>Total Amount</center></td>
+			<td><center>'.$totalAmount.'</center></td>
+		</tr>
+	</table>
+	';	
+
+	echo $table;
     }
 
     /**
@@ -81,7 +117,12 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        //
+        $order_data=Order::whereorder_id($id)->first()->toArray();
+        // $item_list=DB::select('select product_id, quantity, rate, total from order_item where order_id = ?', [$id]);
+        $item_list=DB::table('order_item')->whereorder_id($id)->get()->toArray();
+        $products_data=Product::all()->toArray();
+        // dd($item_list);
+        return view('editOrders', compact('order_data','item_list','products_data'));
     }
 
     /**
@@ -93,7 +134,7 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd($id);
     }
 
     /**

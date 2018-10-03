@@ -1,5 +1,37 @@
 @extends('layouts.app')
 
 @section('content')
-<h1>Reports Page</h1>    
+<div class="container">
+  <div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="glyphicon glyphicon-check"></i>	Order Report
+			</div>
+			<!-- /panel-heading -->
+			<div class="panel-body">
+				
+				<form class="form-horizontal" action="{{action('OrderController@getOrderReport')}}" method="post" id="getOrderReportForm">
+          {{csrf_field()}}
+          <div class="form-group">
+				    <label for="startDate" class="col-sm-2 control-label">Start Date</label>
+				    <div class="col-sm-10">
+				      <input type="text" class="form-control" id="startDate" name="startDate" placeholder="Start Date" autocomplete="off" />
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="endDate" class="col-sm-2 control-label">End Date</label>
+				    <div class="col-sm-10">
+				      <input type="text" class="form-control" id="endDate" name="endDate" placeholder="End Date" autocomplete="off" />
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <div class="col-sm-offset-2 col-sm-10">
+				      <button type="submit" class="btn btn-success" id="generateReportBtn"> <i class="glyphicon glyphicon-ok-sign"></i> Generate Report</button>
+				    </div>
+				  </div>
+				</form>
+
+			</div>
+			<!-- /panel-body -->
+		</div>
+</div> 
 @endsection

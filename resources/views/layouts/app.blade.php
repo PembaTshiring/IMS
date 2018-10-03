@@ -21,6 +21,9 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    
 </head>
 <body>
     <div id="app">
@@ -69,7 +72,7 @@
                                             <li id="topNavManageOrder"><a href="{{route('orders.index')}}"> <i class="glyphicon glyphicon-edit"></i> Manage Orders</a></li>            
                                         </ul>
                                     </li> 
-                                    <li id="navReport"><a href=""> <i class="glyphicon glyphicon-check"></i> Report </a></li>
+                                    <li id="navReport"><a href="{{route('reports')}}"> <i class="glyphicon glyphicon-check"></i> Report </a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -103,6 +106,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> --}}
 
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap.min.js"></script>
 
@@ -171,6 +176,9 @@
 {{-- adding rows --}}
 <script>
     $(document).ready(function () {
+        $("#orderDate").datepicker({
+            dateFormat: 'yy-mm-dd'
+        });
     var tableLength = $("#productTable tbody tr").length;
     var counter = -1;
 
@@ -361,7 +369,74 @@ function paidAmount() {
 		$("#due").val(dueAmount);
 		$("#dueValue").val(dueAmount);
 	} // /if
-} // /paid amoutn function
-</script>    
+} // /paid amount function
+</script>
+
+<script>
+$(document).ready(function() {
+	// order date picker
+	$("#startDate").datepicker({
+        dateFormat: 'yy-mm-dd',
+    });
+	// order date picker
+	$("#endDate").datepicker({
+        dateFormat: 'yy-mm-dd'
+    });
+
+	$("#getOrderReportForm").unbind('submit').bind('submit', function() {
+		
+		var startDate = $("#startDate").val();
+		var endDate = $("#endDate").val();
+
+		if(startDate == "" || endDate == "") {
+			if(startDate == "") {
+				$("#startDate").closest('.form-group').addClass('has-error');
+				$("#startDate").after('<p class="text-danger">The Start Date is required</p>');
+			} else {
+				$(".form-group").removeClass('has-error');
+				$(".text-danger").remove();
+			}
+
+			if(endDate == "") {
+				$("#endDate").closest('.form-group').addClass('has-error');
+				$("#endDate").after('<p class="text-danger">The End Date is required</p>');
+			} else {
+				$(".form-group").removeClass('has-error');
+				$(".text-danger").remove();
+			}
+		} else {
+			$(".form-group").removeClass('has-error');
+			$(".text-danger").remove();
+
+			var form = $(this);
+
+			$.ajax({
+				url: "{{route('getOrderReport')}}",
+				type: 'POST',
+				data: {'_token':_token,'startDate' : startDate,'endDate': endDate},
+				dataType: 'json',
+				success:function(response) {
+					var mywindow = window.open('', 'Stock Management System', 'height=400,width=600');
+	        mywindow.document.write('<html><head><title>Order Report Slip</title>');        
+	        mywindow.document.write('</head><body>');
+	        mywindow.document.write(response);
+	        mywindow.document.write('</body></html>');
+
+	        mywindow.document.close(); // necessary for IE >= 10
+	        mywindow.focus(); // necessary for IE >= 10
+
+	        mywindow.print();
+	        mywindow.close();
+				} // /success
+			});	// /ajax
+
+		} // /else
+
+		return false;
+	});
+
+});
+</script>
+    
 </body>
 </html>
