@@ -109,6 +109,102 @@ class OrderController extends Controller
 	echo $table;
     }
 
+
+    public function printOrder(Request $req){
+        $id=$req->orderId;
+        $reports = DB::table('orders')->whereorder_id($id)->get(['order_date','client_name','client_contact','sub_total','vat','total_amount','discount','grand_total','paid','due'])->toArray();
+        $item_list=DB::table('order_item')->whereorder_id($id)->get();
+        // dd($product_data);
+        foreach ($reports as $report) {
+        $table = '<table border="1" cellspacing="0" cellpadding="20" width="100%">
+	<thead>
+		<tr >
+			<th colspan="5">
+
+			<center>
+				Order Date : '.$report->order_date.'
+				<center>Client Name : '.$report->client_name.'</center>
+				Contact : '.$report->client_contact.'
+			</center>		
+			</th>
+				
+		</tr>		
+	</thead>
+</table>
+<table border="0" width="100%;" cellpadding="5" style="border:1px solid black;border-top-style:1px solid black;border-bottom-style:1px solid black;">
+
+	<tbody>
+		<tr>
+			<th>S.no</th>
+			<th>Product</th>
+			<th>Rate</th>
+			<th>Quantity</th>
+			<th>Total</th>
+		</tr>';
+
+		$x = 1;
+		foreach ($item_list as $item) {
+            $product_data=DB::table('products')->whereproduct_id($item->product_id)->get()->toArray();
+			$table .= '<tr>
+				<th>'.$x.'</th>
+				<th>'.$product_data[0]->product_name.'</th>
+				<th>'.$item->rate.'</th>
+				<th>'.$item->quantity.'</th>
+				<th>'.$item->total.'</th>
+			</tr>
+			';
+		$x++;
+		} 
+
+		$table .= '<tr>
+			<th></th>
+		</tr>
+
+		<tr>
+			<th></th>
+		</tr>
+
+		<tr>
+			<th>Sub Amount</th>
+			<th>'.$report->sub_total.'</th>			
+		</tr>
+
+		<tr>
+			<th>VAT (13%)</th>
+			<th>'.$report->vat.'</th>			
+		</tr>
+
+		<tr>
+			<th>Total Amount</th>
+			<th>'.$report->total_amount.'</th>			
+		</tr>	
+
+		<tr>
+			<th>Discount</th>
+			<th>'.$report->discount.'</th>			
+		</tr>
+
+		<tr>
+			<th>Grand Total</th>
+			<th>'.$report->grand_total.'</th>			
+		</tr>
+
+		<tr>
+			<th>Paid Amount</th>
+			<th>'.$report->paid.'</th>			
+		</tr>
+
+		<tr>
+			<th>Due Amount</th>
+			<th>'.$report->due.'</th>			
+		</tr>
+	</tbody>
+</table>
+ ';
+        }
+echo $table;
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -143,9 +239,11 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function orderDelete($id)
     {
-        //
+        // dd($id);
+        $order=Order::whereorder_id($id)->delete();
+        return redirect()->back();
     }
     public function addorder(){
         return view('addOrders');

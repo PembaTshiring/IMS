@@ -106,7 +106,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> --}}
 
     <script src="{{ asset('js/app.js') }}"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> --}}
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap.min.js"></script>
@@ -121,7 +121,19 @@
       modal.find('.modal-body #id').val(id);
       modal.find('.modal-body #name').val(name);
       modal.find('.modal-body #status').val(status);
-})
+});
+
+$('#editcategoryModel').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget)
+      var id=button.data('id') 
+      var name = button.data('name') 
+      var status = button.data('status') 
+      var modal = $(this)
+      modal.find('.modal-body #id').val(id);
+      modal.find('.modal-body #name').val(name);
+      modal.find('.modal-body #status').val(status);
+});
+
     </script>
     <script>
             $('#editProductModal').on('show.bs.modal', function (event) {
@@ -145,7 +157,7 @@
             modal.find('.modal-body #brand_id').val(brand_id);
             modal.find('.modal-body #category_id').val(category_id);
             modal.find('.modal-body #status').val(status);
-      })
+      });
     </script>
     <script>
         $(".delete").on("submit", function(){
@@ -239,7 +251,7 @@
 
 
 <script type="text/javascript">
-    function getProductData(row = null) {
+function getProductData(row = null) {
         var productid=$("#selectedProduct"+row).val();
         var _token = $('#_token').val();
         // if(productid==""){
@@ -260,7 +272,7 @@
                     $("#productQuantity"+row).val(1);
                     subAmount();
                 }});
-    };
+};
 
 function getTotal(row = null) {
 	if(row) {
@@ -370,6 +382,34 @@ function paidAmount() {
 		$("#dueValue").val(dueAmount);
 	} // /if
 } // /paid amount function
+function printOrder(orderId = null) {
+	if(orderId) {
+		$.ajax({
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+			url: "{{route('printOrder')}}",
+			type: 'POST',
+			data: {'orderId': orderId},
+			dataType: 'text',
+			success:function(response) {
+				
+				var mywindow = window.open('', 'Stock Management System', 'height=400,width=600');
+        mywindow.document.write('<html><head><title>Order Invoice</title>');        
+        mywindow.document.write('</head><body>');
+        mywindow.document.write(response);
+        mywindow.document.write('</body></html>');
+
+        mywindow.document.close(); // necessary for IE >= 10
+        mywindow.focus(); // necessary for IE >= 10
+
+        mywindow.print();
+        mywindow.close();
+				
+			}// /success function
+		}); // /ajax function to fetch the printable order
+    } // /if orderId
+} // /print order function
 </script>
 
 <script>

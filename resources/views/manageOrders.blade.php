@@ -51,9 +51,9 @@
                                             
                                             <li><a type="button" data-toggle="modal" id="paymentOrderModalBtn" data-target="#paymentOrderModal" onclick="paymentOrder()"> <i class="glyphicon glyphicon-save"></i> Payment</a></li>
                                     
-                                            <li><a type="button" onclick="printOrder()"> <i class="glyphicon glyphicon-print"></i> Print </a></li>
+                                            <li><a type="button" onclick="printOrder({{$order->order_id}})"> <i class="glyphicon glyphicon-print"></i> Print </a></li>
                                             
-                                            <li><a type="button" data-toggle="modal" data-target="#removeOrderModal" id="removeOrderModalBtn" onclick="removeOrder()"> <i class="glyphicon glyphicon-trash"></i> Remove</a></li>       
+                                            <li><a href="{{route('orderDelete',$order->order_id)}}" type="button"> <i class="glyphicon glyphicon-trash"></i> Remove</a></li>       
                                           </ul>
                                         </div>
                                     </td>

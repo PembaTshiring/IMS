@@ -29,3 +29,5 @@ Route::post('fetch-product-data','OrderController@fetchProductData')->name('fetc
 Route::post('fetch-selected-product-data','OrderController@fetchSelectedProductData')->name('fetchSelectedProductData');
 Route::get('reports','OrderController@report')->name('reports');
 Route::post('get-order-report','OrderController@getOrderReport')->name('getOrderReport');
+Route::post('print-order','OrderController@printOrder')->name('printOrder');
+Route::get('order-delete/{id}','OrderController@orderDelete')->name('orderDelete');

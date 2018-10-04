@@ -120,7 +120,7 @@
                         <h4 class="modal-title" id="editBrandModelLabel"><i class="fa fa-plus"></i> Edit Brand</h4>
                     </div>
     
-                    <div class="modal-body">
+                    <div class="modal-body brand">
                         <div class="form-group">
                             <input type="hidden" name="id" id="id">
                             <label for="editBrandName" class="col-sm-3 control-label">Brand Name: </label>
