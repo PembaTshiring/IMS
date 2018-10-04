@@ -15,7 +15,7 @@
             <div class="form-group">
                 {!! Form::label('date', 'Date', ['class' => 'col-lg-2 control-label']) !!}
                 <div class="col-lg-10">
-                    {!! Form::date('order_date', \Carbon\Carbon::now(), ['class' => 'form-control',]) !!}
+                    {!! Form::text('order_date',  $value = $order_data['order_date'], ['class' => 'form-control', 'id'=>'orderDate','autocomplete'=>'off' ]) !!}
                 </div>
             </div>
             <div class="form-group">
@@ -43,9 +43,11 @@
                 <tbody>
                     @php 
                     $count=0;
-                    $counter=1; 
-                    @endphp 
-                    @for ($x = 0; $x < count($item_list); $x++) 
+                    $counter=1;
+                    $x=1; 
+                    @endphp
+                    @while ($x <= count($item_list))
+                    {{-- @for ($x = 0; $x < count($item_list); $x++)  --}}
                     <tr id='row{{$x}}' class={{$count}}>
                         <td>
                             <div class="form-group">
@@ -54,8 +56,9 @@
                                     <select class="form-control" name="product_name[]" onchange="getProductData({{$counter}})" id="selectedProduct{{$counter}}">
                                         {{-- @foreach ($item_list as $item) --}}
                                         <option value="">~~SELECT~~</option>
+                                        {{-- @while ($row = count($products_data)) --}}
                                         @foreach ($products_data as $product)
-                                        <option value="{{$product['product_id']}}" {{ $item_list[$x]->product_id == $product['product_id'] ? 'selected':'' }} >{{$product['product_name']}}</option>
+                                        <option value="{{$product['product_id']}}" {{ $item_list[$count]->product_id == $product['product_id'] ? 'selected': '' }} >{{$product['product_name']}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -65,7 +68,7 @@
                             <div class="form-group">
                                 <div class="col-lg-10">
                                     {{-- {!! Form::text('rate[]',$value="$value", ['class' => 'form-control', 'disabled','id'=>"productRate$x",]) !!} --}}
-                                    <input type="text" name="rate[]" id="productRate{{$counter}}" autocomplete="off" class="form-control" disabled="true" value={{$item_list[$x]->rate}}>
+                                    <input type="text" name="rate[]" id="productRate{{$counter}}" autocomplete="off" class="form-control" disabled="true" value={{$item_list[$count]->rate}}>
                                     <input type="hidden" name="rateValue[]" id="rateValue{{$counter}}" autocomplete="off" class="form-control" value="" />
                                 </div>
                             </div>
@@ -73,7 +76,7 @@
                         <td>
                             <div class="form-group">
                                 <div class="col-lg-10">
-                                    {!! Form::number('quantity[]', $value = $item_list[$x]->quantity, ['class' => 'form-control','min'=>'1','id'=>"productQuantity$counter",'onkeyup'=>"getTotal($counter)"]) !!}
+                                    {!! Form::number('quantity[]', $value = $item_list[$count]->quantity, ['class' => 'form-control','min'=>'1','id'=>"productQuantity$counter",'onkeyup'=>"getTotal($counter)"]) !!}
                                 </div>
                             </div>
                         </td>
@@ -81,20 +84,22 @@
                             <div class="form-group">
                                 <div class="col-lg-10">
                                     {{-- {!! Form::text('total', $value = null, ['class' => 'form-control', 'disabled']) !!} --}}
-                                    <input type="text" name="total[]" id="total{{$counter}}" autocomplete="off" class="form-control" disabled="true" value={{$item_list[$x]->total}} />
-                                    <input type="hidden" name="totalValue[]" id="totalValue{{$counter}}" autocomplete="off" class="form-control" value={{$item_list[$x]->total}} />
+                                    <input type="text" name="total[]" id="total{{$counter}}" autocomplete="off" class="form-control" disabled="true" value={{$item_list[$count]->total}} />
+                                    <input type="hidden" name="totalValue[]" id="totalValue{{$counter}}" autocomplete="off" class="form-control" value={{$item_list[$count]->total}} />
                                 </div>
                             </div>
                         </td>
                         <td>
-                            {{-- <button class="btn btn-default removeProductRowBtn" type="button" id="removeProductRowBtn" onclick="removeProductRow{{$counter}}"><i class="glyphicon glyphicon-trash"></i></button> --}}
-                            <button class="btn btn-default ibtnDel" type="button" id="ibtnDel"><i class="glyphicon glyphicon-trash"></i></button></i>
+                            <button class="btn btn-default removeProductRowBtn" type="button" id="removeProductRowBtn" onclick="removeProductRow({{$counter}})"><i class="glyphicon glyphicon-trash"></i></button>
+                            {{-- <button class="btn btn-default ibtnDel" type="button" id="ibtnDel"><i class="glyphicon glyphicon-trash"></i></button></i> --}}
                         </td>
                         </tr>
                         @php 
                         $count++;
-                        $counter++; 
-                        @endphp @endfor
+                        $counter++;
+                        $x++; 
+                        @endphp 
+                        @endwhile
                 </tbody>
             </table>
 
@@ -179,9 +184,9 @@
                 </div>
             </div>
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="button" class="btn btn-default" id="addrow" data-loading-text="Loading..."> <i class="glyphicon glyphicon-plus-sign"></i> Add Row </button>
-                {{--
-                <button type="button" class="btn btn-default" onclick="addRow()" id="addRowBtn" data-loading-text="Loading..."> <i class="glyphicon glyphicon-plus-sign"></i> Add Row </button> --}}
+                {{-- <button type="button" class="btn btn-default" id="addrow" data-loading-text="Loading..."> <i class="glyphicon glyphicon-plus-sign"></i> Add Row </button> --}}
+
+                <button type="button" class="btn btn-default" onclick="addRow()" id="addRowBtn" data-loading-text="Loading..."> <i class="glyphicon glyphicon-plus-sign"></i> Add Row </button>
                 <button type="submit" id="createOrderBtn" data-loading-text="Loading..." class="btn btn-success"><i class="glyphicon glyphicon-ok-sign"></i> Save Changes</button>
 
                 <button type="reset" class="btn btn-default" onclick="resetOrderForm()"><i class="glyphicon glyphicon-erase"></i> Reset</button>

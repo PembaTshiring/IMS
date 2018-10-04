@@ -41,15 +41,15 @@
                     </tr>
             </thead>
             <tbody>
-                {{-- @php
+                @php
                     $arrayNumber=0;    
-                @endphp --}}
-                {{-- @for ($x = 1; $x <4; $x++) --}}
-                <tr id='row1' class="0">
+                @endphp
+                @for ($x = 1; $x <4; $x++)
+                <tr id='row{{$x}}' class="{{$arrayNumber}}">
                     <td>
                         <div class="form-group">
                             <div class="col-lg-10">
-                                    {!! Form::select('product_name[]',[''=>'Choose Product'] + $products ,null,['class'=>'form-control','id'=>'selectedProduct1','onChange'=>"getProductData(1)"])!!}
+                                    {!! Form::select('product_name[]',[''=>'Choose Product'] + $products ,null,['class'=>'form-control','id'=>"selectedProduct$x",'onChange'=>"getProductData($x)"])!!}
                                 </div>
                         </div>
                     </td>
@@ -57,15 +57,15 @@
                         <div class="form-group">
                             <div class="col-lg-10">
                                 {{-- {!! Form::text('rate[]',$value="$value", ['class' => 'form-control', 'disabled','id'=>"productRate$x",]) !!} --}}
-                                <input type="text" name="rate[]" id="productRate1" autocomplete="off" class="form-control" disabled="true">
-                                <input type="hidden" name="rateValue[]" id="rateValue1" autocomplete="off" class="form-control" />
+                                <input type="text" name="rate[]" id="productRate{{$x}}" autocomplete="off" class="form-control" disabled="true">
+                                <input type="hidden" name="rateValue[]" id="rateValue{{$x}}" autocomplete="off" class="form-control" />
                             </div>
                         </div>
                     </td>
                     <td>
                         <div class="form-group">
                             <div class="col-lg-10">
-                                {!! Form::number('quantity[]', $value = null, ['class' => 'form-control','min'=>'1','id'=>"productQuantity1",'onkeyup'=>"getTotal(1)"]) !!}
+                                {!! Form::number('quantity[]', $value = null, ['class' => 'form-control','min'=>'1','id'=>"productQuantity$x",'onkeyup'=>"getTotal($x)"]) !!}
                             </div>
                         </div>
                     </td>
@@ -73,21 +73,21 @@
                         <div class="form-group">
                             <div class="col-lg-10">
                                 {{-- {!! Form::text('total', $value = null, ['class' => 'form-control', 'disabled']) !!} --}}
-                                <input type="text" name="total[]" id="total1" autocomplete="off" class="form-control" disabled="true" />			  					
-			  					<input type="hidden" name="totalValue[]" id="totalValue1" autocomplete="off" class="form-control" />
+                                <input type="text" name="total[]" id="total{{$x}}" autocomplete="off" class="form-control" disabled="true" />			  					
+			  					<input type="hidden" name="totalValue[]" id="totalValue{{$x}}" autocomplete="off" class="form-control" />
                             </div>
                         </div>
                     </td>
                     <td>
-                            {{-- <button class="btn btn-default removeProductRowBtn" type="button" id="removeProductRowBtn" onclick="removeProductRow1"><i class="glyphicon glyphicon-trash"></i></button> --}}
+                    <button class="btn btn-default removeProductRowBtn" type="button" id="removeProductRowBtn" onclick="removeProductRow({{$x}})"><i class="glyphicon glyphicon-trash"></i></button>
                             
                             {{-- <button class="btn btn-default ibtnDel" type="button" id="ibtnDel"><i class="glyphicon glyphicon-trash"></i></button></i> --}}
                     </td>
                 </tr>
-                {{-- @php
+                @php
                     $arrayNumber++;
                 @endphp
-                @endfor --}}
+                @endfor
             </tbody>    
         </table>
 
@@ -173,8 +173,8 @@
         </div>
         </div>
         <div class="col-sm-offset-2 col-sm-10">
-			    <button type="button" class="btn btn-default" id="addrow" data-loading-text="Loading..."> <i class="glyphicon glyphicon-plus-sign"></i> Add Row </button>
-                {{-- <button type="button" class="btn btn-default" onclick="addRow()" id="addRowBtn" data-loading-text="Loading..."> <i class="glyphicon glyphicon-plus-sign"></i> Add Row </button> --}}
+			    {{-- <button type="button" class="btn btn-default" id="addrow" data-loading-text="Loading..."> <i class="glyphicon glyphicon-plus-sign"></i> Add Row </button> --}}
+                <button type="button" class="btn btn-default" onclick="addRow()" id="addRowBtn" data-loading-text="Loading..."> <i class="glyphicon glyphicon-plus-sign"></i> Add Row </button>
                   
                 <button type="submit" id="createOrderBtn" data-loading-text="Loading..." class="btn btn-success"><i class="glyphicon glyphicon-ok-sign"></i> Save Changes</button>
 

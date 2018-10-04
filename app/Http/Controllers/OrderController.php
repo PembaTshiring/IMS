@@ -217,7 +217,7 @@ echo $table;
         // $item_list=DB::select('select product_id, quantity, rate, total from order_item where order_id = ?', [$id]);
         $item_list=DB::table('order_item')->whereorder_id($id)->get()->toArray();
         $products_data=Product::all()->toArray();
-        // dd($item_list);
+        // dd($products_data);
         return view('editOrders', compact('order_data','item_list','products_data'));
     }
 

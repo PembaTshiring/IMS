@@ -106,7 +106,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> --}}
 
     <script src="{{ asset('js/app.js') }}"></script>
-    {{-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> --}}
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap.min.js"></script>
@@ -187,64 +187,155 @@ $('#editcategoryModel').on('show.bs.modal', function (event) {
 
 {{-- adding rows --}}
 <script>
-    $(document).ready(function () {
+//     $(document).ready(function () {
+//         $("#orderDate").datepicker({
+//             dateFormat: 'yy-mm-dd'
+//         });
+//     var tableLength = $("#productTable tbody tr").length;
+//     var counter = -1;
+
+//     $("#addrow").on("click", function () {
+//         if(tableLength > 0) {		
+// 		tableRow = $("#productTable tbody tr:last").attr('id');
+// 		arrayNumber = $("#productTable tbody tr:last").attr('class');
+// 		count = tableRow.substring(3);	
+// 		count = Number(count) + 1;
+// 		arrayNumber = Number(arrayNumber) + 1;					
+// 	    }
+//         else {
+// 		// no table row
+// 		count = 1;
+// 		arrayNumber = 0;
+// 	    }   
+        
+//         $.ajax({
+//             headers: {
+//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//         },
+// 		url: "{{route('fetchSelectedProductData')}}",
+// 		type: 'post',
+// 		dataType: 'json',
+// 		success:function(response) {
+
+//         var newRow = $("<tr id='row"+count+"' class="+arrayNumber+">");
+//         var cols = "";
+        
+//         cols += '<td><div class="form-group"><div class="col-lg-10"><select class="form-control" id="selectedProduct'+count+'" onchange="getProductData('+count+')" name="product_name[]"><option value="" selected="selected">Choose Product</option>';
+//                 // console.log(response);
+//                     $.each(response, function(index, value) {
+// 							cols += '<option value="'+value['product_id']+'">'+value['product_name']+'</option>';							
+// 						});
+//         cols +='</select></div></div></td>';        
+//         cols += '<td><div class="form-group"><div class="col-lg-10"><input type="text" name="rate[]" id="productRate'+count+'" autocomplete="off" class="form-control" disabled="true"><input type="hidden" name="rateValue[]" id="rateValue'+count+'" autocomplete="off" class="form-control" /></div></div></td>';
+//         cols += '<td><div class="form-group"><div class="col-lg-10"><input class="form-control" name="quantity[]" type="number" id="productQuantity'+count+'" onkeyup="getTotal('+count+')"></div></div></td>';
+//         cols += '<td><div class="form-group"><div class="col-lg-10"><input type="text" name="total[]" id="total'+count+'" autocomplete="off" class="form-control" disabled="true" /><input type="hidden" name="totalValue[]" id="totalValue'+count+'" autocomplete="off" class="form-control" /></div></div></td>';
+//         cols += '<td><button class="ibtnDel btn btn-default" type="button" id="ibtnDel"><i class="glyphicon glyphicon-trash"></i></button></i></td>';
+        
+//         newRow.append(cols);
+//         $("table.order-list").append(newRow);
+//         counter++;
+        
+//         }});
+//     });
+
+//     $("table.order-list").on("click", ".ibtnDel", function (event) {
+//         $(this).closest("tr").remove();       
+//         counter -= 1
+//     });
+
+
+// });
+$(document).ready(function () {
         $("#orderDate").datepicker({
             dateFormat: 'yy-mm-dd'
         });
-    var tableLength = $("#productTable tbody tr").length;
-    var counter = -1;
+    });
 
-    $("#addrow").on("click", function () {
-        if(tableLength > 0) {		
+function addRow() {
+	// $("#addRowBtn").button("loading");
+    
+	var tableLength = $("#productTable tbody tr").length;
+
+	var tableRow;
+	var arrayNumber;
+	var count;
+
+	if(tableLength > 0) {		
 		tableRow = $("#productTable tbody tr:last").attr('id');
 		arrayNumber = $("#productTable tbody tr:last").attr('class');
 		count = tableRow.substring(3);	
 		count = Number(count) + 1;
 		arrayNumber = Number(arrayNumber) + 1;					
-	    }
-        else {
+	} else {
 		// no table row
 		count = 1;
 		arrayNumber = 0;
-	    }   
-        
-        $.ajax({
-            headers: {
+	}
+
+	$.ajax({
+		headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
 		url: "{{route('fetchSelectedProductData')}}",
 		type: 'post',
 		dataType: 'json',
 		success:function(response) {
+			// $("#addRowBtn").button("reset");			
 
-        var newRow = $("<tr id='row"+count+"' class="+arrayNumber+">");
-        var cols = "";
-        
-        cols += '<td><div class="form-group"><div class="col-lg-10"><select class="form-control" id="selectedProduct'+count+'" onchange="getProductData('+count+')" name="product_name[]"><option value="" selected="selected">Choose Product</option>';
-                // console.log(response);
-                    $.each(response, function(index, value) {
-							cols += '<option value="'+value['product_id']+'">'+value['product_name']+'</option>';							
+			var tr = '<tr id="row'+count+'" class="'+arrayNumber+'">'+			  				
+
+                '<td>'+
+					'<div class="form-group"><div class="col-lg-10">'+
+
+					'<select class="form-control" name="product_name[]" id="selectedProduct'+count+'" onchange="getProductData('+count+')" >'+
+						'<option value="">Choose Product</option>';
+						// console.log(response);
+						$.each(response, function(index, value) {
+                            tr += '<option value="'+value['product_id']+'">'+value['product_name']+'</option>';	
 						});
-        cols +='</select></div></div></td>';        
-        cols += '<td><div class="form-group"><div class="col-lg-10"><input type="text" name="rate[]" id="productRate'+count+'" autocomplete="off" class="form-control" disabled="true"><input type="hidden" name="rateValue[]" id="rateValue'+count+'" autocomplete="off" class="form-control" /></div></div></td>';
-        cols += '<td><div class="form-group"><div class="col-lg-10"><input class="form-control" name="quantity[]" type="number" id="productQuantity'+count+'" onkeyup="getTotal('+count+')"></div></div></td>';
-        cols += '<td><div class="form-group"><div class="col-lg-10"><input type="text" name="total[]" id="total'+count+'" autocomplete="off" class="form-control" disabled="true" /><input type="hidden" name="totalValue[]" id="totalValue'+count+'" autocomplete="off" class="form-control" /></div></div></td>';
-        cols += '<td><button class="ibtnDel btn btn-default" type="button" id="ibtnDel"><i class="glyphicon glyphicon-trash"></i></button></i></td>';
-        
-        newRow.append(cols);
-        $("table.order-list").append(newRow);
-        counter++;
-        
-        }});
-    });
+													
+					tr += '</select></div>'+
+					'</div>'+
+				'</td>'+
+				'<td style="padding-left:20px;"">'+
+					'<input type="text" name="rate[]" id="productRate'+count+'" autocomplete="off" disabled="true" class="form-control" />'+
+					'<input type="hidden" name="rateValue[]" id="rateValue'+count+'" autocomplete="off" class="form-control" />'+
+				'</td style="padding-left:20px;">'+
+				'<td style="padding-left:20px;">'+
+					'<div class="form-group">'+
+					'<input type="number" name="quantity[]" id="productQuantity'+count+'" onkeyup="getTotal('+count+')" autocomplete="off" class="form-control" min="1" />'+
+					'</div>'+
+				'</td>'+
+				'<td style="padding-left:20px;">'+
+					'<input type="text" name="total[]" id="total'+count+'" autocomplete="off" class="form-control" disabled="true" />'+
+					'<input type="hidden" name="totalValue[]" id="totalValue'+count+'" autocomplete="off" class="form-control" />'+
+				'</td>'+
+				'<td>'+
+					'<button class="btn btn-default removeProductRowBtn" type="button" onclick="removeProductRow('+count+')"><i class="glyphicon glyphicon-trash"></i></button>'+
+				'</td>'+
+			'</tr>';
+			if(tableLength > 0) {							
+				$("#productTable tbody tr:last").after(tr);
+			} else {				
+				$("#productTable tbody").append(tr);
+			}		
 
-    $("table.order-list").on("click", ".ibtnDel", function (event) {
-        $(this).closest("tr").remove();       
-        counter -= 1
-    });
+		} // /success
+	});	// get the product data
+
+} // /add row
+
+function removeProductRow(row = null) {
+	if(row) {
+		$("#row"+row).remove();
 
 
-});
+		subAmount();
+	} else {
+		alert('error! Refresh the page again');
+	}
+}
+
 </script>
 
 
