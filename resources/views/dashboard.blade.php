@@ -26,7 +26,7 @@
         <div class="col-md-6">
             <div class="panel panel-danger">
                 <div class="panel-heading" style="background-color:#e94441">
-                <h1 class="text-center"><a href="{{route('products.index')}}" style="color:white; text-decoration:none;">1</a></h1>
+                <h1 class="text-center"><a href="{{route('products.index')}}" style="color:white; text-decoration:none;">{{$lowstock}}</a></h1>
                 </div>
                 <div>
                 <h2 class="text-center">Low Stock</h2>
@@ -36,7 +36,7 @@
         <div class="col-md-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                <h1 class="text-center">Rs. 3000</h1>
+                <h1 class="text-center">Rs.{{$revenue}}</h1>
                 </div>
                 <div>
                 <h2 class="text-center">Total Revenue</h2>

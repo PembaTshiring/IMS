@@ -27,6 +27,8 @@ class HomeController extends Controller
     {
         $products=Product::all()->count();
         $orders=Order::all()->count();
-        return view('dashboard',compact('products','orders'));
+        $revenue=Order::sum('paid');
+        $lowstock=Product::where('product_quantity','<=',2000)->count();
+        return view('dashboard',compact('products','orders','revenue','lowstock'));
     }
 }

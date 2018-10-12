@@ -48,7 +48,16 @@ class OrderController extends Controller
         $order_info=$request->all();
         $create_order=Order::create($order_info);
         $insertedId = $create_order->id;
-        for ($x=0; $x < count($request->product_name); $x++) { 
+        for ($x=0; $x < count($request->product_name); $x++) {
+            $updateProduct=Product::whereproduct_id($request->product_name[$x])->pluck('product_quantity');
+            
+            for($i=0;$i<$updateProduct->count();$i++){
+            
+            $updateQuantity[$x] = $updateProduct[0] - $request->quantity[$x];
+            
+            // update product table
+            Product::whereproduct_id($request->product_name[$x])->update(['product_quantity' => $updateQuantity[$x]]);
+                
             DB::table('order_item')->insert(
                 [
                     'order_id' => $insertedId,
@@ -59,7 +68,10 @@ class OrderController extends Controller
                 ]
             );
         }
+    }
+        
         return redirect()->action('OrderController@index');
+        
     }
 
     public function report(){
@@ -230,7 +242,84 @@ echo $table;
      */
     public function update(Request $request, $id)
     {
-        dd($id);
+        $data=Order::where('order_id',$id);
+        // dd($request->quantity[0]);
+        // $data->update([
+        //     'order_date' => $request->order_date,
+        //     'client_name' => $request->client_name,
+        //     'client_contact' => $request->client_contact,
+        //     'sub_total' => $request->sub_total,
+        //     'vat' => $request->vat,
+        //     'total_amount' => $request->total_amount,
+        //     'discount' => $request->discount,
+        //     'grand_total' => $request->grand_total,
+        //     'paid'=>$request->paid,
+        //     'due'=>$request->due,
+        //     'payment_type'=>$request->payment_type,
+        //     'payment_status'=>$request->payment_status,
+        // ]);
+
+        $readyToUpdateOrderItem = false;
+        for($x = 0; $x < count($request->product_name); $x++) {
+            
+            $totalQuantity=Product::whereproduct_id($request->product_name[$x])->pluck('product_quantity');
+            // echo($totalQuantity[0]);
+
+            $order_item_quantity=DB::select("SELECT quantity FROM order_item WHERE order_id = $id");
+            // dd($order_item_quantity[$x]->quantity);
+            $edited=$totalQuantity[0]+$order_item_quantity[$x]->quantity;
+            
+            // dd($edited);
+            // for($i=0;$i<count($totalQuantity);$i++){
+           
+            // // dd($order_item_quantity[0]->quantity);
+
+            // //to get the quantity from order_item $order_item_quantity[0]->quantity
+            
+            // $edited_quantity=$totalQuantity[0]+$order_item_quantity[$i]->quantity;   
+            // // dd($edited_quantity);
+
+            Product::whereproduct_id($request->product_name[$x])->update(['product_quantity' => $edited]);
+            // }
+                
+            if(count($request->product_name)==count($request->product_name)){
+                $readyToUpdateOrderItem = true;
+            }
+        }
+        
+        // remove the order item data from order item table
+        for($x = 0; $x < count($request->product_name); $x++) {			
+            DB::table('order_item')->where('order_id', '=', $id)->delete();
+            // DB::delete("delete order_item where order_id = $id");	
+        }
+        if($readyToUpdateOrderItem){
+            for($x = 0; $x < count($request->product_name); $x++) {
+            
+                $totalQuantity=Product::whereproduct_id($request->product_name[$x])->pluck('product_quantity');
+
+                $order_item_quantity=DB::select("SELECT quantity FROM order_item WHERE order_id = $id");
+
+                $edited=$totalQuantity[0]-$request->quantity[$x];
+            
+                Product::whereproduct_id($request->product_name[$x])->update(['product_quantity' => $edited]);
+                
+                DB::table('order_item')->insert(
+                    [
+                        'order_id' => $id,
+                        'product_id'=>$request->product_name[$x],
+                        'quantity'=>$request->quantity[$x],
+                        'rate'=> $request->rateValue[$x],
+                        'total'=>$request->totalValue[$x],
+                    ]
+                );
+
+            }
+        }
+        
+
+        return redirect()->action('OrderController@index');
+       
+        
     }
 
     /**

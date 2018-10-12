@@ -69,7 +69,7 @@
                                 <div class="col-lg-10">
                                     {{-- {!! Form::text('rate[]',$value="$value", ['class' => 'form-control', 'disabled','id'=>"productRate$x",]) !!} --}}
                                     <input type="text" name="rate[]" id="productRate{{$counter}}" autocomplete="off" class="form-control" disabled="true" value={{$item_list[$count]->rate}}>
-                                    <input type="hidden" name="rateValue[]" id="rateValue{{$counter}}" autocomplete="off" class="form-control" value="" />
+                                    <input type="hidden" name="rateValue[]" id="rateValue{{$counter}}" autocomplete="off" class="form-control" value={{$item_list[$count]->rate}} />
                                 </div>
                             </div>
                         </td>

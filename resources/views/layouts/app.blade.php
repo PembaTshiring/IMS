@@ -56,8 +56,9 @@
                         <!-- Authentication Links -->
                         @guest
                             <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
-                            @else
+							<li><a href="{{ route('register') }}">Register</a></li>
+							@endguest
+							@auth
                             <li id="navDashboard"><a href="{{route('dashboard')}}"><i class="glyphicon glyphicon-list-alt"></i>  Dashboard</a></li>        
         
                                         <li id="navBrand"><a href="{{route('brands.index')}}"><i class="glyphicon glyphicon-btc"></i>  Brand</a></li>        
@@ -92,7 +93,7 @@
                                     </li>
                                 </ul>
                             </li>
-                        @endguest
+						@endauth
                     </ul>
                 </div>
             </div>
@@ -106,7 +107,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> --}}
 
     <script src="{{ asset('js/app.js') }}"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> --}}
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap.min.js"></script>
