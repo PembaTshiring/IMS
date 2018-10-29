@@ -15,19 +15,19 @@
         <div class="form-group">
             {!! Form::label('date', 'Date', ['class' => 'col-lg-2 control-label']) !!}
             <div class="col-lg-10">
-                {!! Form::text('order_date', null, ['class' => 'form-control', 'id'=>'orderDate','autocomplete'=>'off' ]) !!}
+                {!! Form::text('order_date', null, ['class' => 'form-control', 'id'=>'orderDate','autocomplete'=>'off','required'=>'true' ]) !!}
             </div>
         </div>
         <div class="form-group">
             {!! Form::label('client_name', 'Client Name', ['class' => 'col-lg-2 control-label']) !!}
             <div class="col-lg-10">
-                {!! Form::text('client_name', $value = null, ['class' => 'form-control', 'placeholder' => 'Client Name','autocomplete'=>'off']) !!}
+                {!! Form::text('client_name', $value = null, ['class' => 'form-control', 'placeholder' => 'Client Name','autocomplete'=>'off','required'=>'true']) !!}
             </div>
         </div>
         <div class="form-group">
             {!! Form::label('client_contact', 'Client Contact', ['class' => 'col-lg-2 control-label']) !!}
             <div class="col-lg-10">
-                {!! Form::text('client_contact', $value = null, ['class' => 'form-control', 'placeholder' => 'Client Contact']) !!}
+                {!! Form::number('client_contact', $value = null, ['class' => 'form-control', 'placeholder' => 'Client Contact','required'=>'true']) !!}
             </div>
         </div>
         <table class="table order-list" id="productTable"> 
@@ -49,7 +49,7 @@
                     <td>
                         <div class="form-group">
                             <div class="col-lg-10">
-                                    {!! Form::select('product_name[]',[''=>'Choose Product'] + $products ,null,['class'=>'form-control','id'=>"selectedProduct$x",'onChange'=>"getProductData($x)"])!!}
+                                    {!! Form::select('product_name[]',[''=>'Choose Product'] + $products ,null,['class'=>'form-control','id'=>"selectedProduct$x",'onChange'=>"getProductData($x)",'required'=>'true'])!!}
                                 </div>
                         </div>
                     </td>
@@ -57,7 +57,7 @@
                         <div class="form-group">
                             <div class="col-lg-10">
                                 {{-- {!! Form::text('rate[]',$value="$value", ['class' => 'form-control', 'disabled','id'=>"productRate$x",]) !!} --}}
-                                <input type="text" name="rate[]" id="productRate{{$x}}" autocomplete="off" class="form-control" disabled="true">
+                                <input type="text" name="rate[]" id="productRate{{$x}}" autocomplete="off" class="form-control" disabled="true" required>
                                 <input type="hidden" name="rateValue[]" id="rateValue{{$x}}" autocomplete="off" class="form-control" />
                             </div>
                         </div>
@@ -65,7 +65,7 @@
                     <td>
                         <div class="form-group">
                             <div class="col-lg-10">
-                                {!! Form::number('quantity[]', $value = null, ['class' => 'form-control','min'=>'1','id'=>"productQuantity$x",'onkeyup'=>"getTotal($x)"]) !!}
+                                {!! Form::number('quantity[]', $value = null, ['class' => 'form-control','min'=>'1','id'=>"productQuantity$x",'onkeyup'=>"getTotal($x)",'required'=>'true']) !!}
                             </div>
                         </div>
                     </td>
@@ -73,14 +73,14 @@
                         <div class="form-group">
                             <div class="col-lg-10">
                                 {{-- {!! Form::text('total', $value = null, ['class' => 'form-control', 'disabled']) !!} --}}
-                                <input type="text" name="total[]" id="total{{$x}}" autocomplete="off" class="form-control" disabled="true" />			  					
+                                <input type="text" name="total[]" id="total{{$x}}" autocomplete="off" class="form-control" disabled="true" required />			  					
 			  					<input type="hidden" name="totalValue[]" id="totalValue{{$x}}" autocomplete="off" class="form-control" />
                             </div>
                         </div>
                     </td>
                     <td>
                     <button class="btn btn-default removeProductRowBtn" type="button" id="removeProductRowBtn" onclick="removeProductRow({{$x}})"><i class="glyphicon glyphicon-trash"></i></button>
-                            
+
                             {{-- <button class="btn btn-default ibtnDel" type="button" id="ibtnDel"><i class="glyphicon glyphicon-trash"></i></button></i> --}}
                     </td>
                 </tr>

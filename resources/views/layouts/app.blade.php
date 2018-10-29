@@ -15,15 +15,16 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap.min.css">
     {{-- <link href="{{ asset('css/custom.css') }}" rel="stylesheet"> --}}
 
-
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
-    
+	<link rel="stylesheet" href="/resources/demos/style.css">
+	<link href="{{ asset('css/jsCalendar.css') }}" rel="stylesheet">
+	<script src="{{ asset('js/jsCalendar.js') }}"></script>
+	
 </head>
 <body>
     <div id="app">
@@ -55,8 +56,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @guest
-                            <li><a href="{{ route('login') }}">Login</a></li>
-							<li><a href="{{ route('register') }}">Register</a></li>
+                            
 							@endguest
 							@auth
                             <li id="navDashboard"><a href="{{route('dashboard')}}"><i class="glyphicon glyphicon-list-alt"></i>  Dashboard</a></li>        
@@ -90,7 +90,10 @@
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             {{ csrf_field() }}
                                         </form>
-                                    </li>
+									</li>
+									<li>
+										<a href="{{route('profile')}}">Edit Profile</a>
+									</li>
                                 </ul>
                             </li>
 						@endauth
@@ -107,13 +110,16 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> --}}
 
     <script src="{{ asset('js/app.js') }}"></script>
-    {{-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> --}}
+	{{-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> --}}
+	
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap.min.js"></script>
 
     <script>
-      $('#editBrandModel').on('show.bs.modal', function (event) {
+	var brandName = $("#brandName").val();
+	
+	  $('#editBrandModel').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget)
       var id=button.data('id') 
       var name = button.data('name') 
@@ -123,6 +129,7 @@
       modal.find('.modal-body #name').val(name);
       modal.find('.modal-body #status').val(status);
 });
+
 
 $('#editcategoryModel').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget)
@@ -150,7 +157,7 @@ $('#editcategoryModel').on('show.bs.modal', function (event) {
             var status = button.data('status') 
             var modal = $(this)
             modal.find('.modal-body #id').val(id);
-            modal.find('.modal-body #image').val(image);
+			$("#getProductImage").attr('src', 'images/'+image);
             modal.find('.modal-body #name').val(name);
             modal.find('.modal-body #code').val(code);
             modal.find('.modal-body #quantity').val(quantity);
@@ -161,7 +168,7 @@ $('#editcategoryModel').on('show.bs.modal', function (event) {
       });
     </script>
     <script>
-        $(".delete").on("submit", function(){
+        $(".delete").on("click", function(){
             return confirm("Are you sure you want to delete?");
         });
     </script>

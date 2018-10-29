@@ -27,7 +27,7 @@ class CreateOrdersTable extends Migration
             $table->string('due');
             $table->integer('payment_type');
             $table->integer('payment_status');
-            $table->integer('order_status');
+            $table->integer('order_status')->default('1');
             $table->timestamps();
         });
     }

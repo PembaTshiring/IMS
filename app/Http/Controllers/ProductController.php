@@ -18,8 +18,8 @@ class ProductController extends Controller
     public function index()
     {   
         $products=Product::all();
-        $categories=Category::pluck('category_name','category_id')->all();
-        $brands=Brand::pluck('brand_name','brand_id')->all();
+        $categories=Category::wherecategory_status(1)->pluck('category_name','category_id')->all();
+        $brands=Brand::wherebrand_status(1)->pluck('brand_name','brand_id')->all();
         return view('products',compact('categories','brands','products'));
     }
 

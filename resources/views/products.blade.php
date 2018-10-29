@@ -18,7 +18,7 @@
     
                     <div class="remove-messages"></div>
     
-                    <div class="div-action pull pull-right" style="padding-bottom:20px;">
+                    <div class="div-action" style="padding-bottom:20px;">
                         <button class="btn btn-default button1" data-toggle="modal" id="addProductModalBtn" data-target="#addProductModal"> <i class="glyphicon glyphicon-plus-sign"></i> Add Product </button>
                     </div> <!-- /div-action -->				
                     
@@ -59,6 +59,7 @@
                                         <ul class="dropdown-menu">
                                             <li>
                                                 <a type="button" data-toggle="modal" id="editProductModalBtn" data-target="#editProductModal" 
+                                                data-image="{{$product->product_image}}"
                                                 data-id="{{$product->product_id}}" 
                                                 data-name="{{$product->product_name}}" 
                                                 data-code="{{$product->product_code}}" 
@@ -68,9 +69,11 @@
                                                 data-category_id="{{$product->category_id}}" 
                                                 data-status="{{$product->product_status}}"> <i class="glyphicon glyphicon-edit"></i> Edit</a></li>
                                             <li>
-                                                {!! Form::open(['method'=>'DELETE', 'class'=>'delete','action'=>['ProductController@destroy',$product->product_id]]) !!}
+                                                {{-- {!! Form::open(['method'=>'DELETE', 'class'=>'delete','action'=>['ProductController@destroy',$product->product_id]]) !!}
                                                 {!!Form::submit('Delete',['class'=>'btn btn-danger btn-sm']) !!}
-                                                {!!Form::close()!!}</li>       
+                                                {!!Form::close()!!} --}}
+                                                <a class="delete" href="{{route('productDelete',$product->product_id)}}" type="button"> <i class="glyphicon glyphicon-trash"></i> Remove</a>    
+                                            </li>       
                                             </ul>
                                         </div>
                                     </td>
@@ -103,42 +106,42 @@
                         
                     <div class="form-group">
                             {!! Form::label('product_image','Name:')!!}
-                            {!! Form::file('product_image',null,['class'=>'form-control'])!!}  
+                            {!! Form::file('product_image',null,['class'=>'form-control','required'=>'true'])!!}  
                     </div> <!-- /form-group-->	     	           	       
       
                 <div class="form-group">
                         {!! Form::label('Product Name','Product Name:')!!}
-                        {!! Form::text('product_name',null,['class'=>'form-control'])!!}
+                        {!! Form::text('product_name',null,['class'=>'form-control','required'=>'true'])!!}
                 </div> <!-- /form-group-->	    
 
                 <div class="form-group">
                         {!! Form::label('Product Code','Product Code:')!!}
-                        {!! Form::text('product_code',null,['class'=>'form-control'])!!}
+                        {!! Form::text('product_code',null,['class'=>'form-control','required'=>'true'])!!}
                 </div> <!-- /form-group-->
       
                 <div class="form-group">
                         {!! Form::label('Quantity','Quantity:')!!}
-                        {!! Form::text('product_quantity',null,['class'=>'form-control'])!!}
+                        {!! Form::number('product_quantity',null,['class'=>'form-control','required'=>'true'])!!}
                 </div> <!-- /form-group-->	        	 
       
                 <div class="form-group">
                         {!! Form::label('Rate','Rate:')!!}
-                        {!! Form::text('product_rate',null,['class'=>'form-control'])!!}
+                        {!! Form::number('product_rate',null,['class'=>'form-control','required'=>'true'])!!}
                 </div> <!-- /form-group-->	     	        
       
                 <div class="form-group">
                         {!! Form::label('Brand Name','Brand:')!!}
-                        {!! Form::select('brand_id',[''=>'Choose Brand'] + $brands ,null,['class'=>'form-control'])!!} 
+                        {!! Form::select('brand_id',[''=>'Choose Brand'] + $brands ,null,['class'=>'form-control','required'=>'true'])!!} 
                 </div> <!-- /form-group-->
       
                 <div class="form-group">
                         {!! Form::label('Category Name','Category:')!!}
-                        {!! Form::select('category_id',[''=>'Choose Category'] + $categories ,null,['class'=>'form-control'])!!} 
+                        {!! Form::select('category_id',[''=>'Choose Category'] + $categories ,null,['class'=>'form-control','required'=>'true'])!!} 
                 </div> <!-- /form-group-->					        	         	       
       
                 <div class="form-group">
                         {!! Form::label('Status','Status:')!!}
-                        {!! Form::select('product_status',[''=>'~~SELECT~~','1' => 'Available', '2' => 'Not Available'],null,['class'=>'form-control'])!!}
+                        {!! Form::select('product_status',[''=>'~~SELECT~~','1' => 'Available', '2' => 'Not Available'],null,['class'=>'form-control','required'=>'true'])!!}
                 </div> <!-- /form-group-->	         	        
                 
             </div> <!-- /modal-body -->
@@ -156,7 +159,7 @@
 <!--Add modal -->      
 
 
-<!-- edit categories brand -->
+<!-- edit product modal -->
 <div class="modal fade" id="editProductModal" tabindex="-1" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -177,14 +180,14 @@
                       <div role="tabpanel" class="tab-pane active" id="photo">
                           <form action="{{route('product.update')}}" method="POST" id="updateProductImageForm" class="form-horizontal" enctype="multipart/form-data">
                             <br />
-                          <div id="edit-productPhoto-messages"></div>
+                          <div id="edit-product Photo-messages"></div>
   
                           <div class="form-group">
                           <label for="editProductImage" class="col-sm-3 control-label">Edit the Image: </label>
                           <label class="col-sm-1 control-label">: </label>
-                              <div class="col-sm-8">							    				   
-                                <img src="https://via.placeholder.com/400x400" id="getProductImage" class="thumbnail" style="width:250px; height:250px;" />
-                              </div>
+                              <div class="col-sm-8">		   
+                                <img src="" id="getProductImage" class="thumbnail img-responsive"/>
+                            </div>
                             </div> <!-- /form-group-->
                             
                             

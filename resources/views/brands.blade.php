@@ -18,10 +18,10 @@
     
                     <div class="remove-messages"></div>
     
-                    <div class="div-action pull pull-right" style="padding-bottom:20px;">
+                    <div class="div-action" style="padding-bottom:20px;">
                         <button class="btn btn-default button1" data-toggle="modal" data-target="#addBrandModel"> <i class="glyphicon glyphicon-plus-sign"></i> Add Brand </button>
                     </div> <!-- /div-action -->				
-                    
+                   
                     <table class="table" id="manageBrandTable">
                         <thead>
                             <tr>							
@@ -52,9 +52,10 @@
                                             <i class="glyphicon glyphicon-edit"></i> Edit</a>
                                         </li>
                                         <li>   
-                                            {!! Form::open(['method'=>'DELETE', 'class'=>'delete','action'=>['BrandController@destroy',$brand->brand_id]]) !!}
+                                            {{-- {!! Form::open(['method'=>'DELETE', 'class'=>'delete','action'=>['BrandController@destroy',$brand->brand_id]]) !!}
                                             {!!Form::submit('Delete',['class'=>'btn btn-danger btn-sm']) !!}
-                                            {!!Form::close()!!}
+                                            {!!Form::close()!!} --}}
+                                            <a class="delete" href="{{route('brandDelete',$brand->brand_id)}}" type="button" > <i class="glyphicon glyphicon-trash"></i> Remove</a>    
                                         </li>       
                                       </ul>
                                     </div>
@@ -89,12 +90,12 @@
             {!! Form::open(['method' => 'POST', 'action'=>'BrandController@store']) !!}
             <div class="form-group">
                 {!! Form::label('Brand Name','Brand Name:')!!}
-                {!! Form::text('brand_name',null,['class'=>'form-control','required'=>'true'])!!}    
+                {!! Form::text('brand_name',null,['class'=>'form-control','required'=>'true','id'=>'brandName'])!!}    
                 </div>
             
                 <div class="form-group">
                     {!! Form::label('status','Status:')!!}
-                    {!! Form::select('brand_status',[''=>'Choose Category','1'=>'Available','2'=>'Not Available'],null,['class'=>'form-control'])!!}    
+                    {!! Form::select('brand_status',[''=>'Choose Category','1'=>'Available','2'=>'Not Available'],null,['class'=>'form-control','required'=>'true'])!!}    
                 </div>
             
         </div>
@@ -113,7 +114,7 @@
     <div class="modal fade" id="editBrandModel" tabindex="-1" role="dialog" aria-labelledby="editBrandModelLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form action="{{route('brand.update')}}" class="form-horizontal" method="post">
+                <form action="{{route('brand.update')}}" class="form-horizontal" method="post" id="submitBrandForm">
                     {{csrf_field()}}
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -126,7 +127,7 @@
                             <label for="editBrandName" class="col-sm-3 control-label">Brand Name: </label>
                             <label class="col-sm-1 control-label">: </label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="name" name="brand_name">
+                                <input type="text" class="form-control" id="name" name="brand_name" required>
                             </div>
                         </div>
     
@@ -134,7 +135,7 @@
                             <label for="editBrandStatus" class="col-sm-3 control-label">Status: </label>
                             <label class="col-sm-1 control-label">: </label>
                             <div class="col-sm-8">
-                                <select class="form-control" id="status" name="brand_status">
+                                <select class="form-control" id="status" name="brand_status" required>
                                     <option value="">~~SELECT~~</option>
                                     <option value="1">Available</option>
                                     <option value="2">Not Available</option>

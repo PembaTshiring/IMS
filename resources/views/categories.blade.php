@@ -18,7 +18,7 @@
     
                     <div class="remove-messages"></div>
     
-                    <div class="div-action pull pull-right" style="padding-bottom:20px;">
+                    <div class="div-action" style="padding-bottom:20px;">
                         <button class="btn btn-default button1" data-toggle="modal" id="addCategoriesModalBtn" data-target="#addCategoriesModal"> <i class="glyphicon glyphicon-plus-sign"></i> Add Categories </button>
                     </div> <!-- /div-action -->				
                     
@@ -52,9 +52,10 @@
                                             <i class="glyphicon glyphicon-edit"></i> Edit</a>
                                         </li>
                                         <li>   
-                                            {!! Form::open(['method'=>'DELETE', 'class'=>'delete','action'=>['CategoryController@destroy',$category->category_id]]) !!}
+                                            {{-- {!! Form::open(['method'=>'DELETE', 'class'=>'delete','action'=>['CategoryController@destroy',$category->category_id]]) !!}
                                             {!!Form::submit('Delete',['class'=>'btn btn-danger btn-sm']) !!}
-                                            {!!Form::close()!!}
+                                            {!!Form::close()!!} --}}
+                                            <a class="delete" href="{{route('categoryDelete',$category->category_id)}}" type="button"> <i class="glyphicon glyphicon-trash"></i> Remove</a>
                                         </li>       
                                       </ul>
                                     </div>
@@ -88,7 +89,7 @@
                         
                             <div class="form-group">
                                 {!! Form::label('status','Status:')!!}
-                                {!! Form::select('category_status',[''=>'Choose Category','1'=>'Available','2'=>'Not Available'],null,['class'=>'form-control'])!!}    
+                                {!! Form::select('category_status',[''=>'Choose Category','1'=>'Available','2'=>'Not Available'],null,['class'=>'form-control','required'=>'true'])!!}    
                             </div>
                         
                     </div>
@@ -119,7 +120,7 @@
                             <label for="editcategoryName" class="col-sm-3 control-label">category Name: </label>
                             <label class="col-sm-1 control-label">: </label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="name" name="category_name">
+                                <input type="text" class="form-control" id="name" name="category_name" required >
                             </div>
                         </div>
     
@@ -127,7 +128,7 @@
                             <label for="editcategorystatus" class="col-sm-3 control-label">Status: </label>
                             <label class="col-sm-1 control-label">: </label>
                             <div class="col-sm-8">
-                                <select class="form-control" id="status" name="category_status">
+                                <select class="form-control" id="status" name="category_status" required>
                                     <option value="">~~SELECT~~</option>
                                     <option value="1">Available</option>
                                     <option value="2">Not Available</option>
