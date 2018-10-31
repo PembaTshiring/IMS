@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Brand;
+use Session;
+use Validator;
 
 use Illuminate\Http\Request;
 
@@ -36,7 +38,18 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
+
+        $validator = Validator::make($request->all(), [
+            'brand_name' => 'required|unique:brands|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            Session::flash('data_exists','Brand Already Exists');
+            return redirect()->back()->withInput();
+        }
+        
         Brand::create($request->all());
+        Session::flash('store','Brand Successfully Added');
         return redirect()->back();
     }
 
@@ -77,6 +90,7 @@ class BrandController extends Controller
     public function destroy($id)
     {
         $brand=Brand::wherebrand_id($id)->delete();
+        Session::flash('delete','Brand Successfully Deleted');
         return redirect()->back();
     }
 }

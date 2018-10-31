@@ -142,6 +142,30 @@ $('#editcategoryModel').on('show.bs.modal', function (event) {
       modal.find('.modal-body #status').val(status);
 });
 
+$('#paymentOrderModal').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget)
+      var due=button.data('due') 
+	  var id=button.data('id')
+      var modal = $(this)
+      modal.find('.modal-body #due').val(due);
+	  modal.find('.modal-body #payAmount').val(due);
+	  modal.find('.modal-body #payAmount').attr("max",due);
+	  modal.find('.modal-body #id').val(id);
+});
+
+$(".alert-success").delay(500).show(10, function() {
+	$(this).delay(3000).hide(10, function() {
+		$(this).remove();
+	});
+});
+
+$(".alert-danger").delay(500).show(10, function() {
+	$(this).delay(3000).hide(10, function() {
+		$(this).remove();
+	});
+});
+
+
     </script>
     <script>
             $('#editProductModal').on('show.bs.modal', function (event) {

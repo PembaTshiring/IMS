@@ -17,12 +17,30 @@
                 <div class="panel-body">
     
                     <div class="remove-messages"></div>
-    
+                    @if(Session::has('store'))
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong><i class="glyphicon glyphicon-ok-sign"></i></strong>
+                            {{session('store')}}
+                    </div>
+                    @elseif(Session::has('delete'))
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong><i class="glyphicon glyphicon-ok-sign"></i></strong>
+                            {{session('delete')}}
+                    </div>
+                    @elseif(Session::has('data_exists'))
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong><i class="glyphicon glyphicon-ok-sign"></i></strong>
+                            {{session('data_exists')}}
+                    </div>
+                    @endif
                     <div class="div-action" style="padding-bottom:20px;">
                         <button class="btn btn-default button1" data-toggle="modal" data-target="#addBrandModel"> <i class="glyphicon glyphicon-plus-sign"></i> Add Brand </button>
                     </div> <!-- /div-action -->				
                    
-                    <table class="table" id="manageBrandTable">
+                    <table class="table table-hover" id="manageBrandTable">
                         <thead>
                             <tr>							
                                 <th>Brand Name</th>

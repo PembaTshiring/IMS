@@ -1,11 +1,14 @@
 <?php
 
 namespace App;
-
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
+
+    use SoftDeletes;
+    
     protected $fillable=[
         'product_code',
         'product_name',
@@ -17,6 +20,7 @@ class Product extends Model
         'product_status',
 
     ]; 
+    protected $dates=['deleted_at'];
 
     public function users()
     {
@@ -35,6 +39,10 @@ class Product extends Model
     public function orders()
     {
         return $this->belongsToMany('App\Order', 'order_item', 'order_id', 'product_id');
+    }
+
+    public function getProductNameAttribute($product_name){
+        return ucwords($product_name);
     }
 
 }

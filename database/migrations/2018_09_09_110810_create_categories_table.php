@@ -17,6 +17,8 @@ class CreateCategoriesTable extends Migration
             $table->increments('category_id')->index();
             $table->string('category_name');
             $table->integer('category_status');
+            
+            $table->softDeletes();
             $table->timestamps();
         });
     }

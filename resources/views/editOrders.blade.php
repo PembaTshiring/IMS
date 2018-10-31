@@ -125,14 +125,14 @@
                     <div class="col-lg-10">
                         {{-- {!! Form::text('total_amount', $value = null, ['class' => 'form-control col-md-9','disabled']) !!} --}}
                         <input type="text" class="form-control" id="totalAmount" name="totalAmount" disabled="true" value={{$order_data[ 'total_amount']}} />
-                        <input type="hidden" class="form-control" id="totalAmountValue" name="total_amount" value={{$order_data[ 'vat']}} />
+                        <input type="hidden" class="form-control" id="totalAmountValue" name="total_amount" value={{$order_data[ 'total_amount']}} />
                     </div>
                 </div>
                 <div class="form-group">
                     {!! Form::label('discount', 'Discount', ['class' => 'col-lg-2 control-label']) !!}
                     <div class="col-lg-10">
                         {{-- {!! Form::text('discount', $value = null, ['class' => 'form-control col-md-9']) !!} --}}
-                        <input type="text" class="form-control" id="discount" name="discount" onkeyup="discountFunc()" min="0" autocomplete="off" value={{$order_data[ 'discount']}} />
+                        <input type="text" class="form-control" id="discount" name="discount" onkeyup="discountFunc()" min="0" autocomplete="off" value="{{$order_data[ 'discount']}}" placeholder="0.00" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -149,7 +149,7 @@
                     {!! Form::label('paid', 'Paid Amount', ['class' => 'col-lg-2 control-label']) !!}
                     <div class="col-lg-10">
                         {{-- {!! Form::text('paid', $value = null, ['class' => 'form-control col-md-9']) !!} --}}
-                        <input type="text" class="form-control" id="paid" name="paid" autocomplete="off" onkeyup="paidAmount()" value={{$order_data[ 'paid']}} />
+                        <input type="text" class="form-control" id="paid" name="paid" autocomplete="off"  onkeyup="paidAmount()" value="{{$order_data[ 'paid']}}" placeholder="0.00" />
                     </div>
                 </div>
                 <div class="form-group">

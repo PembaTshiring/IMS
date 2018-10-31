@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('brand-update','BrandController@brandUpdate')->name('brand.update');
     Route::post('category-update','CategoryController@categoryUpdate')->name('category.update');
     Route::post('product-update','ProductController@productUpdate')->name('product.update');
+    Route::post('payment-update','OrderController@paymentUpdate')->name('payment.update');
     Route::post('fetch-product-data','OrderController@fetchProductData')->name('fetchProductData');
     Route::post('fetch-selected-product-data','OrderController@fetchSelectedProductData')->name('fetchSelectedProductData');
     Route::get('reports','OrderController@report')->name('reports');

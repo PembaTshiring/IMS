@@ -17,6 +17,8 @@ class CreateBrandsTable extends Migration
             $table->increments('brand_id')->index();
             $table->string('brand_name');
             $table->integer('brand_status');
+
+            $table->softDeletes();
             $table->timestamps();
         });
     }

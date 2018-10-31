@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Session;
+use Validator;
 use App\Brand;
 use App\Category;
 use App\Product;
@@ -41,7 +42,14 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'product_name' => 'required|unique:products|max:255',
+        ]);
 
+        if ($validator->fails()) {
+            Session::flash('data_exists','Product Already Exists');
+            return redirect()->back()->withInput();
+        }
         $input=$request->all();
         if ($file=$request->file('product_image')) {
             $name=time().$file->getClientOriginalName();
@@ -49,6 +57,7 @@ class ProductController extends Controller
             $input['product_image']=$name;
         }
         Product::create($input);
+        Session::flash('store','Product Successfully Added');
         return redirect()->back();
     }
 
@@ -115,9 +124,6 @@ class ProductController extends Controller
         ]);
 
         return redirect()->back();
-        
-        
-        
     }
 
     /**
@@ -129,6 +135,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         Product::whereproduct_id($id)->delete();
+        Session::flash('delete','Product Successfully Deleted');
         return redirect()->back();
     }
 }

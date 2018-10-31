@@ -24,6 +24,7 @@ class CreateProductsTable extends Migration
             $table->string('product_image');
             $table->integer('product_status');
             
+            $table->softDeletes();
             $table->timestamps();
             $table->foreign('brand_id')->references('brand_id')->on('brands')->onDelete('cascade');
             $table->foreign('category_id')->references('category_id')->on('categories')->onDelete('cascade');

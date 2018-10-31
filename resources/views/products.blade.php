@@ -17,12 +17,32 @@
                 <div class="panel-body">
     
                     <div class="remove-messages"></div>
-    
+                    @if(Session::has('store'))
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong><i class="glyphicon glyphicon-ok-sign"></i></strong>
+                            {{session('store')}}
+                          </div>
+                    @elseif(Session::has('delete'))
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong><i class="glyphicon glyphicon-ok-sign"></i></strong>
+                            {{session('delete')}}
+                          </div>
+                    @elseif(Session::has('data_exists'))
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong><i class="glyphicon glyphicon-ok-sign"></i></strong>
+                            {{session('data_exists')}}
+                    </div>
+                    @endif
+                    
                     <div class="div-action" style="padding-bottom:20px;">
                         <button class="btn btn-default button1" data-toggle="modal" id="addProductModalBtn" data-target="#addProductModal"> <i class="glyphicon glyphicon-plus-sign"></i> Add Product </button>
                     </div> <!-- /div-action -->				
                     
-                    <table class="table" id="product_table">
+                    <div class="table-responsive">
+                    <table class="table table-hover " id="product_table">
                         <thead>
                             <tr>
                                 <th style="width:10%;">Photo</th>							
@@ -81,6 +101,7 @@
                                 @endforeach
                         </tbody>
                     </table>
+                    </div>
                     <!-- /table -->
     
                 </div> <!-- /panel-body -->

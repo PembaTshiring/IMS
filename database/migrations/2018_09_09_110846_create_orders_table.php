@@ -21,13 +21,14 @@ class CreateOrdersTable extends Migration
             $table->string('sub_total');
             $table->string('vat');
             $table->string('total_amount');
-            $table->string('discount');
+            $table->string('discount')->default('0')->nullable();
             $table->string('grand_total');
-            $table->string('paid');
+            $table->string('paid')->default('0')->nullable();
             $table->string('due');
             $table->integer('payment_type');
             $table->integer('payment_status');
-            $table->integer('order_status')->default('1');
+            
+            $table->softDeletes();
             $table->timestamps();
         });
     }

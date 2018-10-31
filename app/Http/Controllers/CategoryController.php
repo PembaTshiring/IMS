@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use Illuminate\Http\Request;
 use App\Category;
+use Session;
 
 class CategoryController extends Controller
 {
@@ -36,7 +38,16 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'category_name' => 'required|unique:categories|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            Session::flash('data_exists','Category Already Exists');
+            return redirect()->back()->withInput();
+        }
         Category::create($request->all());
+        Session::flash('store','Category Successfully Added');
         return redirect()->back();
     }
 
@@ -89,6 +100,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $brand=Category::wherecategory_id($id)->delete();
+        Session::flash('delete','Category Successfully Deleted');
         return redirect()->back();
     }
 }

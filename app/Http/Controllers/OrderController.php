@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Session;
 use App\Product;
 use App\Order;
 use Illuminate\Support\Facades\DB;
@@ -21,6 +22,7 @@ class OrderController extends Controller
             // $item_count=Order::whereorder_id($order['order_id'])->count();
             $item_count[] = DB::table('order_item')->whereorder_id($order->order_id)->count();
         }
+        
         return view('manageorders',compact('orders','item_count'));
     }
 
@@ -34,6 +36,7 @@ class OrderController extends Controller
         $products_data=Product::whereproduct_status(1)->pluck('product_name','product_id');
         $products=$products_data->toArray();
         // dd($products);
+        
         return view('addOrders',compact('products'));
     }
 
@@ -69,7 +72,8 @@ class OrderController extends Controller
             );
         }
     }
-        
+
+        Session::flash('store','Order Successfully Added');
         return redirect()->action('OrderController@index');
         
     }
@@ -85,7 +89,8 @@ class OrderController extends Controller
         $reports = DB::table('orders')->where([
             ['order_date', '>=', $startDate],
             ['order_date', '<=', $endDate],
-            ['order_status', '=', 1]
+            ['deleted_at','=', Null]
+            // ['order_status', '=', 1]
         ])->get(['order_date','client_name','client_contact','grand_total'])->toArray();
 
         $table = '
@@ -233,6 +238,14 @@ echo $table;
         return view('editOrders', compact('order_data','item_list','products_data'));
     }
 
+    public function paymentUpdate(Request $request){
+        $order_update=Order::where('order_id',$request->id)->get(['paid','due','payment_type','payment_status']);
+        $new_paid=$order_update[0]->paid+$request->payAmount;
+        $new_due=$order_update[0]->due-$request->payAmount;
+        DB::update("update orders set paid= $new_paid, due = $new_due , payment_type= $request->paymentType, payment_status=$request->paymentStatus where order_id =$request->id ");
+        return redirect()->back();
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -244,20 +257,20 @@ echo $table;
     {
         $data=Order::where('order_id',$id);
         // dd($request->quantity[0]);
-        // $data->update([
-        //     'order_date' => $request->order_date,
-        //     'client_name' => $request->client_name,
-        //     'client_contact' => $request->client_contact,
-        //     'sub_total' => $request->sub_total,
-        //     'vat' => $request->vat,
-        //     'total_amount' => $request->total_amount,
-        //     'discount' => $request->discount,
-        //     'grand_total' => $request->grand_total,
-        //     'paid'=>$request->paid,
-        //     'due'=>$request->due,
-        //     'payment_type'=>$request->payment_type,
-        //     'payment_status'=>$request->payment_status,
-        // ]);
+        $data->update([
+            'order_date' => $request->order_date,
+            'client_name' => $request->client_name,
+            'client_contact' => $request->client_contact,
+            'sub_total' => $request->sub_total,
+            'vat' => $request->vat,
+            'total_amount' => $request->total_amount,
+            'discount' => $request->discount,
+            'grand_total' => $request->grand_total,
+            'paid'=>$request->paid,
+            'due'=>$request->due,
+            'payment_type'=>$request->payment_type,
+            'payment_status'=>$request->payment_status,
+        ]);
 
         $readyToUpdateOrderItem = false;
         for($x = 0; $x < count($request->product_name); $x++) {
@@ -332,6 +345,7 @@ echo $table;
     {
         // dd($id);
         $order=Order::whereorder_id($id)->delete();
+        Session::flash('delete','Order Successfully Deleted');
         return redirect()->back();
     }
     public function addorder(){
