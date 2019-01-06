@@ -24,7 +24,7 @@
                             {{session('delete')}}
                           </div>
                     @endif
-                    <table class="table" id="manageOrderTable">
+                    <table class="table table-condensed table-hover" id="manageOrderTable">
                             <thead>
                                 <tr>
                                     <th>#</th>

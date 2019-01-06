@@ -38,11 +38,18 @@
                     @endif
                     <div class="div-action" style="padding-bottom:20px;">
                         <button class="btn btn-default button1" data-toggle="modal" data-target="#addBrandModel"> <i class="glyphicon glyphicon-plus-sign"></i> Add Brand </button>
-                    </div> <!-- /div-action -->				
-                   
-                    <table class="table table-hover" id="manageBrandTable">
+                    </div> <!-- /div-action -->		
+                    Show/Hide Column:		
+                    <div style="padding-bottom:20px"> 
+                        <div class="btn-group" role="group" aria-label="...">
+                        <button type="button" class="btn btn-default toggle-vis" data-column="1">Brand Name</button><button type="button" class="btn btn-default toggle-vis" data-column="2">Status</button><button type="button" class="btn btn-default toggle-vis" data-column="3">Option</button>
+                        </div>        
+                    </div>
+                    
+                    <table class="table table-condensed table-hover" id="manageBrandTable">
                         <thead>
-                            <tr>							
+                            <tr>
+                                <th>#</th>							
                                 <th>Brand Name</th>
                                 <th>Status</th>
                                 <th style="width:15%;">Options</th>
@@ -51,6 +58,7 @@
                         <tbody>
                             @foreach ($brands as $brand)
                             <tr>
+                                <td></td>
                                 <td>{{$brand->brand_name}}</td>
                                 
                                 @if ($brand->brand_status==1)

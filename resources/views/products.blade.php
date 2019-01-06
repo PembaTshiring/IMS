@@ -39,12 +39,28 @@
                     
                     <div class="div-action" style="padding-bottom:20px;">
                         <button class="btn btn-default button1" data-toggle="modal" id="addProductModalBtn" data-target="#addProductModal"> <i class="glyphicon glyphicon-plus-sign"></i> Add Product </button>
-                    </div> <!-- /div-action -->				
+                    </div> <!-- /div-action -->	
+                    
+                    Show/Hide Column:		
+                    <div style="padding-bottom:20px"> 
+                        <div class="btn-group" role="group" aria-label="...">
+                        <button type="button" class="btn btn-default toggle-vis" data-column="1">Photo</button>
+                        <button type="button" class="btn btn-default toggle-vis" data-column="2">Product Name</button>
+                        <button type="button" class="btn btn-default toggle-vis" data-column="3">Product Code</button>
+                        <button type="button" class="btn btn-default toggle-vis" data-column="4">Rate</button>
+                        <button type="button" class="btn btn-default toggle-vis" data-column="5">Quantity</button>
+                        <button type="button" class="btn btn-default toggle-vis" data-column="6">Brand</button>
+                        <button type="button" class="btn btn-default toggle-vis" data-column="7">Category</button>
+                        <button type="button" class="btn btn-default toggle-vis" data-column="8">Status</button>
+                        <button type="button" class="btn btn-default toggle-vis" data-column="9">Option</button>
+                        </div>        
+                    </div>
                     
                     <div class="table-responsive">
-                    <table class="table table-hover " id="product_table">
+                    <table class="table table-hover table-condensed" id="product_table">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th style="width:10%;">Photo</th>							
                                 <th>Product Name</th>
                                 <th>Product Code</th>
@@ -59,6 +75,7 @@
                         <tbody>
                             @foreach ($products as $product)
                                 <tr>
+                                    <td></td>
                                     <td><img height="50" src="{{$product->product_image ? 'images/'.$product->product_image :'https://via.placeholder.com/400x400'}} " alt="" srcset=""></td>							
                                     <td>{{$product->product_name}}</td>
                                     <td>{{$product->product_code}}</td>

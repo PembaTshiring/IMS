@@ -19,7 +19,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+	{{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"> --}}
+	<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link rel="stylesheet" href="/resources/demos/style.css">
 	<link href="{{ asset('css/jsCalendar.css') }}" rel="stylesheet">
@@ -110,11 +111,19 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> --}}
 
     <script src="{{ asset('js/app.js') }}"></script>
-	{{-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> --}}
-	
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	{{-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script> --}}
+
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script> 
+
+
 
     <script>
 	var brandName = $("#brandName").val();
@@ -198,22 +207,252 @@ $(".alert-danger").delay(500).show(10, function() {
     </script>
     <script>
         $(document).ready(function() {
-        $('#product_table').DataTable();
+		var t=$('#product_table').DataTable({
+			"columnDefs": [ {
+            "searchable": false,
+            "orderable": false,
+            "targets": 0
+        } ],
+        "order": [[ 1, 'asc' ]],
+		dom: 'lBfrtip',
+        buttons: [
+			{
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns:':visible'
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: [ 2,3,4,5,6,7,8 ]
+                }
+            },
+            'csvHtml5',
+            {
+                extend: 'pdfHtml5',
+                title: 'Data export',
+                exportOptions: {
+                    columns: [ 2,3,4,5,6,7,8 ]
+                }
+            }
+        ]
+		});
+        
+
+		// $('#product_table thead tr').clone(true).appendTo( '#product_table thead' );
+    	// $('#product_table thead tr:eq(1) th').each( function (i) {
+        // var title = $(this).text();
+        // $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+ 
+        // $( 'input', this ).on( 'keyup change', function () {
+        //     if ( t.column(i).search() !== this.value ) {
+        //         t
+        //             .column(i)
+        //             .search( this.value )
+        //             .draw();
+        //     }
+        // } );
+    	// } );
+        
+
+		t.on( 'order.dt search.dt', function () {
+        t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+        } );
+    	} ).draw();
+
+        $('button.toggle-vis').on( 'click', function (e) {
+        e.preventDefault();
+ 
+        // Get the column API object
+        var column = t.column( $(this).attr('data-column') );
+ 
+        // Toggle the visibility
+        column.visible( ! column.visible() );
+        } );
+
         } );
     </script>
     <script>
         $(document).ready(function() {
-        $('#manageCategoriesTable').DataTable();
+        var t=$('#manageCategoriesTable').DataTable({
+			"columnDefs": [ {
+            "searchable": false,
+            "orderable": false,
+            "targets": 0
+        } ],
+        "order": [[ 1, 'asc' ]],
+		dom: 'lBfrtip',
+        buttons: [
+			{
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns:':visible'
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: [ 1, 2 ]
+                }
+            },
+            'csvHtml5',
+            {
+                extend: 'pdfHtml5',
+                title: 'Data export',
+                exportOptions: {
+                    columns: [ 1, 2 ]
+                }
+            }
+        ]
+		});
+
+		// $('#manageCategoriesTable thead tr').clone(true).appendTo( '#manageCategoriesTable thead' );
+    	// $('#manageCategoriesTable thead tr:eq(1) th').each( function (i) {
+        // var title = $(this).text();
+        // $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+ 
+        // $( 'input', this ).on( 'keyup change', function () {
+        //     if ( t.column(i).search() !== this.value ) {
+        //         t
+        //             .column(i)
+        //             .search( this.value )
+        //             .draw();
+        //     }
+        // } );
+    	// } );
+		
+
+		t.on( 'order.dt search.dt', function () {
+        t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+        } );
+    	} ).draw();
+
+        $('button.toggle-vis').on( 'click', function (e) {
+        e.preventDefault();
+ 
+        // Get the column API object
+        var column = t.column( $(this).attr('data-column') );
+ 
+        // Toggle the visibility
+        column.visible( ! column.visible() );
+        } );
+
         } );
     </script>
     <script>
         $(document).ready(function() {
-        $('#manageBrandTable').DataTable();
+        var t=$('#manageBrandTable').DataTable({
+			"columnDefs": [ {
+            "searchable": false,
+            "orderable": false,
+            "targets": [0,2,3]
+        } ],
+        "order": [[ 1, 'asc' ]],
+		dom: 'lBfrtip',
+        buttons: [
+			{
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns:':visible'
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: [ 1, 2 ]
+                }
+            },
+            'csvHtml5',
+            {
+                extend: 'pdfHtml5',
+                title: 'Data export',
+                exportOptions: {
+                    columns: [ 1, 2 ]
+                }
+            }
+        ],
+		orderCellsTop: true,
+		});
+	// 	var table = $('#example').DataTable( {
+    //     "scrollY": "200px",
+    //     "paging": false
+    // } );
+
+		// $('#manageBrandTable thead tr').clone(true).appendTo( '#manageBrandTable thead' );
+    	// $('#manageBrandTable thead tr:eq(1) th').each( function (i) {
+        // var title = $(this).text();
+        // $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+ 
+        // $( 'input', this ).on( 'keyup change', function () {
+        //     if ( t.column(i).search() !== this.value ) {
+        //         t
+        //             .column(i)
+        //             .search( this.value )
+        //             .draw();
+        //     }
+        // } );
+        // } );
+        
+		t.on( 'order.dt search.dt', function () {
+        t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+        } );
+        } ).draw();
+        
+        $('button.toggle-vis').on( 'click', function (e) {
+        e.preventDefault();
+ 
+        // Get the column API object
+        var column = t.column( $(this).attr('data-column') );
+ 
+        // Toggle the visibility
+        column.visible( ! column.visible() );
+        } );
+
         } );
     </script>
     <script>
         $(document).ready(function() {
-        $('#manageOrderTable').DataTable();
+        var t=$('#manageOrderTable').DataTable({
+			"columnDefs": [ {
+            "searchable": false,
+            "orderable": false,
+            "targets": 0
+        } ],
+        "order": [[ 1, 'asc' ]],
+		dom: 'lBfrtip',
+        buttons: [
+			'copyHtml5',
+            'excelHtml5',
+            'csvHtml5',
+            'pdfHtml5'
+        ]
+		});
+
+		$('#manageOrderTable thead tr').clone(true).appendTo( '#manageOrderTable thead' );
+    	$('#manageOrderTable thead tr:eq(1) th').each( function (i) {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+ 
+        $( 'input', this ).on( 'keyup change', function () {
+            if ( t.column(i).search() !== this.value ) {
+                t
+                    .column(i)
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    	} );
+
+		t.on( 'order.dt search.dt', function () {
+        t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+        } );
+    } ).draw();
+
         } );
     </script>
 
