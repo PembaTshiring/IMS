@@ -102,7 +102,6 @@
                                                 @endif
                                                 @endforeach
                                             @endfor
-                                              
                                         </div>                                                 
                                     </td>
                                     @if ($order->payment_status==1)
