@@ -39,18 +39,32 @@
                     <div class="div-action" style="padding-bottom:20px;">
                         <button class="btn btn-default button1" data-toggle="modal" id="addCategoriesModalBtn" data-target="#addCategoriesModal"> <i class="glyphicon glyphicon-plus-sign"></i> Add Categories </button>
                     </div> <!-- /div-action -->				
-                    Show/Hide Column:		
-                    <div style="padding-bottom:20px"> 
-                        <div class="btn-group" role="group" aria-label="...">
-                        <button type="button" class="btn btn-default toggle-vis" data-column="1">Categories Name</button><button type="button" class="btn btn-default toggle-vis" data-column="2">Status</button><button type="button" class="btn btn-default toggle-vis" data-column="3">Option</button>
-                        </div>        
+                    <p> Show/Hide Column: </p>
+                    <div style="padding-bottom:20px">
+                          <div class="btn-group" data-toggle="buttons">
+                            <label class="btn btn-default toggle-vis" data-column="1">
+                                <input type="checkbox">Category Name
+                              </label>
+                              <label class="btn btn-default toggle-vis" data-column="2">
+                                  <input type="checkbox">Status
+                              </label>
+                              <label class="btn btn-default toggle-vis" data-column="3">
+                                  <input type="checkbox">Option
+                              </label>
+                          </div>
                     </div>
-                    <table class="table table-condensed table-hover" id="manageCategoriesTable">
+                    <table class="table table-condensed table-hover " id="manageCategoriesTable">
                         <thead>
                             <tr>
                                 <th>#</th>							
-                                <th>Categories Name</th>
-                                <th>Status</th>
+                                <th><input type="text" id="category_name" class="form-control input-sm" placeholder="Name" autocomplete="off"></th>
+                                <th>
+                                    <select name="status" id="category_status" class="form-control">
+                                        <option value="">Status</option>
+                                        <option value="Available">Available</option>
+                                        <option value="Not Available">Not Available</option>
+                                       </select>
+                                    </th>
                                 <th style="width:15%;">Options</th>
                             </tr>
                         </thead>

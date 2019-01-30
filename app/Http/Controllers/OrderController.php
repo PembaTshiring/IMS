@@ -18,12 +18,17 @@ class OrderController extends Controller
     public function index()
     {
         $orders=Order::all();
+        $products_data=Product::all()->toArray();
         foreach ($orders as $order) {
             // $item_count=Order::whereorder_id($order['order_id'])->count();
             $item_count[] = DB::table('order_item')->whereorder_id($order->order_id)->count();
+            $item_list=DB::table('order_item')->whereorder_id($order->order_id)->get()->toArray();
         }
+
+        // return($item_list[0]->product_id);
+        // return($products_data[0]['product_id']);
         
-        return view('manageorders',compact('orders','item_count'));
+        return view('manageorders',compact('orders','item_count','products_data','item_list'));
     }
 
     /**

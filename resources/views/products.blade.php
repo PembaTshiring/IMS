@@ -41,19 +41,37 @@
                         <button class="btn btn-default button1" data-toggle="modal" id="addProductModalBtn" data-target="#addProductModal"> <i class="glyphicon glyphicon-plus-sign"></i> Add Product </button>
                     </div> <!-- /div-action -->	
                     
-                    Show/Hide Column:		
-                    <div style="padding-bottom:20px"> 
-                        <div class="btn-group" role="group" aria-label="...">
-                        <button type="button" class="btn btn-default toggle-vis" data-column="1">Photo</button>
-                        <button type="button" class="btn btn-default toggle-vis" data-column="2">Product Name</button>
-                        <button type="button" class="btn btn-default toggle-vis" data-column="3">Product Code</button>
-                        <button type="button" class="btn btn-default toggle-vis" data-column="4">Rate</button>
-                        <button type="button" class="btn btn-default toggle-vis" data-column="5">Quantity</button>
-                        <button type="button" class="btn btn-default toggle-vis" data-column="6">Brand</button>
-                        <button type="button" class="btn btn-default toggle-vis" data-column="7">Category</button>
-                        <button type="button" class="btn btn-default toggle-vis" data-column="8">Status</button>
-                        <button type="button" class="btn btn-default toggle-vis" data-column="9">Option</button>
-                        </div>        
+                    <p> Show/Hide Column: </p>
+                    <div style="padding-bottom:20px">
+                          <div class="btn-group" data-toggle="buttons">
+                            <label class="btn btn-default toggle-vis" data-column="1">
+                                <input type="checkbox">Photo
+                              </label>
+                              <label class="btn btn-default toggle-vis" data-column="2">
+                                  <input type="checkbox">Product Name
+                              </label>
+                              <label class="btn btn-default toggle-vis" data-column="3">
+                                  <input type="checkbox">Product Code
+                              </label>
+                              <label class="btn btn-default toggle-vis" data-column="4">
+                                <input type="checkbox">Rate
+                            </label>
+                            <label class="btn btn-default toggle-vis" data-column="5">
+                                <input type="checkbox">Quantity
+                            </label>
+                            <label class="btn btn-default toggle-vis" data-column="6">
+                                <input type="checkbox">Brand
+                            </label>
+                            <label class="btn btn-default toggle-vis" data-column="7">
+                                <input type="checkbox">Category
+                            </label>
+                            <label class="btn btn-default toggle-vis" data-column="8">
+                                <input type="checkbox">Status
+                            </label>
+                            <label class="btn btn-default toggle-vis" data-column="9">
+                                <input type="checkbox">Option
+                            </label>
+                          </div>
                     </div>
                     
                     <div class="table-responsive">
@@ -62,13 +80,18 @@
                             <tr>
                                 <th>#</th>
                                 <th style="width:10%;">Photo</th>							
-                                <th>Product Name</th>
-                                <th>Product Code</th>
+                                <th><input type="text" id="product_name" class="form-control input-sm" placeholder="Name" autocomplete="off"></th>
+                                <th><input type="text" id="product_code" class="form-control input-sm" placeholder="code" autocomplete="off"></th>
                                 <th>Rate</th>							
                                 <th>Quantity</th>
                                 <th>Brand</th>
                                 <th>Category</th>
-                                <th>Status</th>
+                                <th><select name="status" id="status" class="form-control">
+                                    <option value="">Status</option>
+                                    <option value="Available">Available</option>
+                                    <option value="Not Available">Not Available</option>
+                                   </select>
+                                </th>
                                 <th style="width:15%;">Options</th>
                             </tr>
                         </thead>

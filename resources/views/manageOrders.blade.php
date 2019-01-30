@@ -24,15 +24,47 @@
                             {{session('delete')}}
                           </div>
                     @endif
+                    
+                    <p> Show/Hide Column: </p>
+                    <div style="padding-bottom:20px">
+                          <div class="btn-group" data-toggle="buttons">
+                            <label class="btn btn-default toggle-vis" data-column="1">
+                                <input type="checkbox">Order Date
+                              </label>
+                              <label class="btn btn-default toggle-vis" data-column="2">
+                                  <input type="checkbox">Client Name
+                              </label>
+                              <label class="btn btn-default toggle-vis" data-column="3">
+                                  <input type="checkbox">Phone Number
+                              </label>
+                              <label class="btn btn-default toggle-vis" data-column="4">
+                                <input type="checkbox">Order items
+                            </label>
+                            <label class="btn btn-default toggle-vis" data-column="5">
+                                <input type="checkbox">Status
+                            </label>
+                            <label class="btn btn-default toggle-vis" data-column="6">
+                                <input type="checkbox">Option
+                            </label>
+                          </div>
+                    </div>
+
                     <table class="table table-condensed table-hover" id="manageOrderTable">
                             <thead>
                                 <tr>
                                     <th>#</th>
                                     <th>Order Date</th>
-                                    <th>Client Name</th>
-                                    <th>Contact</th>
+                                    <th><input type="text" id="client_name" class="form-control input-sm" placeholder="Name" autocomplete="off"></th>
+                                    <th><input type="text" id="client_contact" class="form-control input-sm" placeholder="Contact" autocomplete="off"></th>
                                     <th>Total Order Item</th>
-                                    <th>Payment Status</th>
+                                    <th>
+                                        <select name="status" id="payment_status" class="form-control">
+                                            <option value="">Payment Status</option>
+                                            <option value="Full Payment">Full Payment</option>
+                                            <option value="Advance Payment">Advance Payment</option>
+                                            <option value="No Payment">No Payment</option>
+                                           </select>
+                                    </th>
                                     <th>Option</th>
                                 </tr>
                             </thead>
@@ -46,7 +78,33 @@
                                     <td>{{$order->order_date}}</td>
                                     <td>{{$order->client_name}}</td>
                                     <td>{{$order->client_contact}}</td>
-                                    <td>{{$item_count["$x"]}}</td>
+                                    <td class="details-control">
+                                        <button class="btn btn-info btn-xs" onclick="test()">
+                                            <b>Items : </b> {{$item_count["$x"]}} 
+                                        </button>
+                                        {{-- Item Id: @for ($y = 0; $y < $item_count["$x"]; $y++)
+                                                {{$item_list["$y"]->product_id}}
+                                            @endfor --}}
+                                        
+                                        <!-- Split button -->
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn btn-info btn-xs"><b>Items : </b> {{$item_count["$x"]}}</button>
+                                            <button type="button" class="btn dropdown-toggle btn btn-info btn-xs" data-toggle="collapse" data-target="#extra_info{{$x}}" aria-haspopup="true" aria-expanded="false">
+                                            <span class="caret"></span>
+                                            </button>
+                                        </div>
+                                        
+                                        <div id="extra_info{{$x}}" class="collapse">
+                                            @for ($y = 0; $y < $item_count["$x"]; $y++)
+                                                @foreach ($products_data as $product)
+                                                @if($item_list["$y"]->product_id==$product['product_id'])
+                                                   <li> {{$product['product_name']}} </li>
+                                                @endif
+                                                @endforeach
+                                            @endfor
+                                              
+                                        </div>                                                 
+                                    </td>
                                     @if ($order->payment_status==1)
                                     <td><label class="label label-success">Full Payment</label></td>
                                     @elseif($order->payment_status==2)
