@@ -73,35 +73,50 @@
                                 $x=0; 
                                 @endphp
                                 @foreach ($orders as $order)                                  
-                                <tr>
+                                <tr id={{$x}}>
                                     <td></td>
                                     <td>{{$order->order_date}}</td>
                                     <td>{{$order->client_name}}</td>
                                     <td>{{$order->client_contact}}</td>
                                     <td class="details-control">
-                                        <button class="btn btn-info btn-xs" onclick="test()">
+                                        {{-- <button class="btn btn-info btn-xs">
                                             <b>Items : </b> {{$item_count["$x"]}} 
-                                        </button>
+                                        </button> --}}
                                         {{-- Item Id: @for ($y = 0; $y < $item_count["$x"]; $y++)
                                                 {{$item_list["$y"]->product_id}}
                                             @endfor --}}
                                         
                                         <!-- Split button -->
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn btn-info btn-xs"><b>Items : </b> {{$item_count["$x"]}}</button>
-                                            <button type="button" class="btn dropdown-toggle btn btn-info btn-xs" data-toggle="collapse" data-target="#extra_info{{$x}}" aria-haspopup="true" aria-expanded="false">
+                                            <button type="button" class="btn btn btn-info btn-xs test"><b>Items : </b> {{$item_count["$x"]}} <input type="hidden" id="item_count{{$x}}" value={{$item_count["$x"]}}> </button>
+                                            <button type="button" class="btn dropdown-toggle btn btn-info btn-xs extra-info" data-toggle="collapse" data-target="#detail_info{{$x}}" aria-haspopup="true" aria-expanded="false">
                                             <span class="caret"></span>
                                             </button>
                                         </div>
                                         
-                                        <div id="extra_info{{$x}}" class="collapse">
-                                            @for ($y = 0; $y < $item_count["$x"]; $y++)
-                                                @foreach ($products_data as $product)
-                                                @if($item_list["$y"]->product_id==$product['product_id'])
-                                                   <li> {{$product['product_name']}} </li>
-                                                @endif
-                                                @endforeach
-                                            @endfor
+                                        <div id="detail_info{{$x}}" class="collapse detail-info col-md-6" style="margin-top:5px;">
+                                                <table class="table table-striped table-bordered table-hover" cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="white-space: nowrap;">Product Name</th>
+                                                                <th>Quantity</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            
+                                                                @for ($y = 0; $y < $item_count["$x"]; $y++)
+                                                                    @foreach ($products_data as $product)
+                                                                    @if($item_list["$y"]->product_id==$product['product_id'])
+                                                                    <tr>            
+                                                                    <td>{{$product['product_name']}}</td>
+                                                                    <td>{{$product['product_quantity']}}</td>
+                                                                    </tr>
+                                                                    @endif
+                                                                    @endforeach
+                                                                @endfor
+                                                                
+                                                            </tbody>
+                                                </table>
                                         </div>                                                 
                                     </td>
                                     @if ($order->payment_status==1)

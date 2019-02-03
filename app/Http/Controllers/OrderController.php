@@ -19,6 +19,8 @@ class OrderController extends Controller
     {
         $orders=Order::all();
         $products_data=Product::all()->toArray();
+        $test=response()->json($products_data);
+        // dd($test);
         foreach ($orders as $order) {
             // $item_count=Order::whereorder_id($order['order_id'])->count();
             $item_count[] = DB::table('order_item')->whereorder_id($order->order_id)->count();
@@ -28,7 +30,8 @@ class OrderController extends Controller
         // return($item_list[0]->product_id);
         // return($products_data[0]['product_id']);
         
-        return view('manageorders',compact('orders','item_count','products_data','item_list'));
+        return view('manageorders',compact('orders','item_count','products_data','item_list','test'));
+        
     }
 
     /**
@@ -286,7 +289,7 @@ echo $table;
             $order_item_quantity=DB::select("SELECT quantity FROM order_item WHERE order_id = $id");
             // dd($order_item_quantity[$x]->quantity);
             $edited=$totalQuantity[0]+$order_item_quantity[$x]->quantity;
-            
+        
             // dd($edited);
             // for($i=0;$i<count($totalQuantity);$i++){
            

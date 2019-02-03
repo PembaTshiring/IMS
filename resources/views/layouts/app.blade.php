@@ -543,6 +543,16 @@
                 // Toggle the visibility
                 column.visible(!column.visible());
             });
+
+            $('#manageOrderTable tbody .extra-info').on('click', function () {
+            var tr = $(this).closest('tr');
+            var row = t.row( tr );
+            var id= tr.attr('id');
+            var item_count=$( "#item_count"+id).attr('value');
+            console.log(item_count);
+                row.child( $( "#detail_info"+id ) ).show(500);
+                // tr.addClass('shown');
+            } );
             
         });
     </script>
