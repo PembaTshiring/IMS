@@ -25,6 +25,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('categories', 'CategoryController');
     Route::resource('products', 'ProductController');
     Route::resource('orders', 'OrderController');
+    Route::resource('customers', 'CustomerController');
     Route::post('brand-update','BrandController@brandUpdate')->name('brand.update');
     Route::post('category-update','CategoryController@categoryUpdate')->name('category.update');
     Route::post('product-update','ProductController@productUpdate')->name('product.update');
@@ -41,4 +42,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('orders/{id}', 'OrderController@update');
     Route::get('profile','HomeController@editProfile')->name('profile');
     Route::post('updateProfile','HomeController@updateProfile')->name('updateProfile');
+    Route::get('customer-delete/{id}','CustomerController@destroy')->name('customerDelete');
+    Route::post('customer-update','CustomerController@customerUpdate')->name('customer.update');
 });

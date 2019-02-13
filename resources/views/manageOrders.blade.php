@@ -105,13 +105,16 @@
                                                         <tbody>
                                                             
                                                                 @for ($y = 0; $y < $item_count["$x"]; $y++)
-                                                                    @foreach ($products_data as $product)
-                                                                    @if($item_list["$y"]->product_id==$product['product_id'])
+                                                                   
+                                                                @foreach ($products_data as $product)
+                                                                @isset($item_list[$y]->product_id)    
+                                                                @if($item_list[$y]->product_id==$product['product_id'])
                                                                     <tr>            
                                                                     <td>{{$product['product_name']}}</td>
-                                                                    <td>{{$product['product_quantity']}}</td>
+                                                                    <td>{{$item_list[$y]->quantity}}</td>
                                                                     </tr>
                                                                     @endif
+                                                                    @endisset
                                                                     @endforeach
                                                                 @endfor
                                                                 

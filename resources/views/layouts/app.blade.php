@@ -70,6 +70,11 @@
                         <li id="navProduct">
                             <a href="{{route('products.index')}}"> <i class="glyphicon glyphicon-ruble"></i> Product </a>
                         </li>
+
+                        <li id="navCustomer">
+                            <a href="{{route('customers.index')}}"> <i class="glyphicon glyphicon-user"></i> Customers </a>
+                        </li>
+                        
                         <li class="dropdown" id="navOrder">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="glyphicon glyphicon-shopping-cart"></i> Orders <span class="caret"></span></a>
                             <ul class="dropdown-menu">
@@ -465,6 +470,72 @@
                 column.visible(!column.visible());
             });
 
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            var t = $('#manageCustomerTable').DataTable({
+                "columnDefs": [{
+                    "searchable": false,
+                    "orderable": false,
+                    "targets": 0
+                }],
+                "order": [
+                    [1, 'asc']
+                ],
+                dom: 'lBrtip',
+                buttons: [{
+                        extend: 'copyHtml5',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    }, {
+                        extend: 'excelHtml5',
+                        exportOptions: {
+                            columns: [1, 2]
+                        }
+                    },
+                    'csvHtml5', {
+                        extend: 'pdfHtml5',
+                        title: 'Data export',
+                        exportOptions: {
+                            columns: [1, 2]
+                        }
+                    }
+                ],
+                orderCellsTop: true,
+            });
+            $('#customer_name', this).on('input', function() {
+                if (this.value == "") {
+                    t
+                        .search('')
+                        .order([1, 'asc'])
+                        .columns(1).search('')
+                        .draw();
+                } else {
+                    t.column(1).search(this.value, true, false).draw();
+                }
+            });
+            $('#customer_contact', this).on('input', function() {
+                if (this.value == "") {
+                    t
+                        .search('')
+                        .order([2, 'asc'])
+                        .columns(2).search('')
+                        .draw();
+                } else {
+                    t.column(2).search(this.value, true, false).draw();
+                }
+            });
+            $('label.toggle-vis').on('click', function(e) {
+                e.preventDefault();
+
+                // Get the column API object
+                var column = t.column($(this).attr('data-column'));
+
+                // Toggle the visibility
+                column.visible(!column.visible());
+            });
         });
     </script>
     <script>

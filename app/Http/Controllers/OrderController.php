@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Session;
 use App\Product;
 use App\Order;
+use App\Customer;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
@@ -57,7 +58,17 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $order_info=$request->all();
+        // dd($order_info);
         $create_order=Order::create($order_info);
+        $create_customer=Customer::create([
+            'customer_name'=>$order_info['client_name'],
+            'contact'=>$order_info['client_contact'],
+            'total_purchase'=>$order_info['total_amount'],
+            'total_paid'=>$order_info['paid'],
+            'total_due'=>$order_info['due']
+        ]);
+        
+        
         $insertedId = $create_order->id;
         for ($x=0; $x < count($request->product_name); $x++) {
             $updateProduct=Product::whereproduct_id($request->product_name[$x])->pluck('product_quantity');
@@ -80,6 +91,7 @@ class OrderController extends Controller
             );
         }
     }
+
 
         Session::flash('store','Order Successfully Added');
         return redirect()->action('OrderController@index');
@@ -288,6 +300,7 @@ echo $table;
 
             $order_item_quantity=DB::select("SELECT quantity FROM order_item WHERE order_id = $id");
             // dd($order_item_quantity[$x]->quantity);
+            if(isset($order_item_quantity[$x]->quantity)){
             $edited=$totalQuantity[0]+$order_item_quantity[$x]->quantity;
         
             // dd($edited);
@@ -306,6 +319,7 @@ echo $table;
             if(count($request->product_name)==count($request->product_name)){
                 $readyToUpdateOrderItem = true;
             }
+        }
         }
         
         // remove the order item data from order item table
