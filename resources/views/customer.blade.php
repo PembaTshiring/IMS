@@ -142,7 +142,7 @@
                                 <label for="editcustomerContact" class="col-sm-3 control-label">Contact: </label>
                                 <label class="col-sm-1 control-label">: </label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="contact" name="contact" required>
+                                    <input type="number" class="form-control" id="contact" name="contact" required>
                                 </div>
                             </div>
                         

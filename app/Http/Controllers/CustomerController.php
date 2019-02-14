@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 use App\Customer;
+use App\Order;
 use Illuminate\Http\Request;
 use Session;
+use Illuminate\Support\Facades\DB;
+
 
 class CustomerController extends Controller
 {
@@ -40,32 +43,21 @@ class CustomerController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
     public function customerUpdate(Request $request)
     {
-       echo "hello";
-        // return redirect()->back();
+       
+       $customer = Customer::find($request->id);
+       $order_client_update=Order::where('client_name',$customer->customer_name);
+       $order_client_update->update([
+            'client_name' => $request->customer_name,
+            'client_contact' => $request->contact,
+        ]);
+    
+       $customer->customer_name=$request->customer_name;
+       $customer->contact=$request->contact;
+       $customer->save();
+    
+       return redirect()->back();
     }
 
     /**

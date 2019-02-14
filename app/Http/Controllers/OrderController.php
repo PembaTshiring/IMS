@@ -382,4 +382,13 @@ echo $table;
         $selected_product_data=DB::select('SELECT product_id, product_name FROM products WHERE product_status = 1');
         return response()->json($selected_product_data);
         }
+    
+    public function autocomplete(Request $request){
+        
+        $data=Customer::select("customer_name")
+        ->where("customer_name","LIKE","%($request->input(key:'client_name'))%")->get();
+        // dd($data);
+        return response()->json($data);
+    }
+
 }

@@ -36,6 +36,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('get-order-report','OrderController@getOrderReport')->name('getOrderReport');
     Route::post('print-order','OrderController@printOrder')->name('printOrder');
     Route::get('order-delete/{id}','OrderController@orderDelete')->name('orderDelete');
+    Route::get('autocomplete','OrderController@autocomplete')->name('autocomplete');
+
     Route::get('brand-delete/{id}','BrandController@destroy')->name('brandDelete');
     Route::get('category-delete/{id}','CategoryController@destroy')->name('categoryDelete');
     Route::get('product-delete/{id}','ProductController@destroy')->name('productDelete');

@@ -21,7 +21,7 @@
         <div class="form-group">
             {!! Form::label('client_name', 'Client Name', ['class' => 'col-lg-2 control-label']) !!}
             <div class="col-lg-10">
-                {!! Form::text('client_name', $value = null, ['class' => 'form-control', 'placeholder' => 'Client Name','autocomplete'=>'off','required'=>'true']) !!}
+                {!! Form::text('client_name', $value = null, ['class' => 'typeahead form-control', 'placeholder' => 'Client Name','autocomplete'=>'off','required'=>'true']) !!}
             </div>
         </div>
         <div class="form-group">
@@ -121,7 +121,7 @@
                 {!! Form::label('discount', 'Discount', ['class' => 'col-lg-2 control-label']) !!}
                 <div class="col-lg-10">
                     {{-- {!! Form::text('discount', $value = null, ['class' => 'form-control col-md-9']) !!} --}}
-                    <input type="text" class="form-control" id="discount" name="discount" onkeyup="discountFunc()" min="0" autocomplete="off" placeholder="0.00"/>
+                    <input type="text" class="form-control" id="discount" name="discount" onkeyup="discountFunc()" min="0" autocomplete="off" placeholder="0.00" value="0.00"/>
                 </div>
         </div>
         <div class="form-group">
@@ -138,7 +138,7 @@
                 {!! Form::label('paid', 'Paid Amount', ['class' => 'col-lg-2 control-label']) !!}
                 <div class="col-lg-10">
                     {{-- {!! Form::text('paid', $value = null, ['class' => 'form-control col-md-9']) !!} --}}
-                    <input type="text" class="form-control" id="paid" name="paid" autocomplete="off" onkeyup="paidAmount()" placeholder="0.00"/>
+                    <input type="text" class="form-control" id="paid" name="paid" autocomplete="off" onkeyup="paidAmount()" placeholder="0.00" value="0.00"/>
                 </div>
         </div>
         <div class="form-group">

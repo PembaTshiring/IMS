@@ -126,10 +126,13 @@
 
     {{-- this app.js is for brand,category,product popup modal data during edit --}}
     <script src="{{ asset('js/app.js') }}"></script>
+    
     {{-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> --}}
 {{--     
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script> --}}
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.js"></script> --}}
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap.min.js"></script>
@@ -536,7 +539,24 @@
                 // Toggle the visibility
                 column.visible(!column.visible());
             });
+            t.on( 'order.dt search.dt', function () {
+            t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                cell.innerHTML = i+1;
+            } );
+        } ).draw();
         });
+
+        $('#editCustomerModel').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget)
+            var id = button.data('id')
+            var name = button.data('name')
+            var contact = button.data('contact')
+            var modal = $(this)
+            modal.find('.modal-body #id').val(id);
+            modal.find('.modal-body #name').val(name);
+            modal.find('.modal-body #contact').val(contact);
+        });
+
     </script>
     <script>
         $(document).ready(function() {
@@ -691,7 +711,19 @@
             $("#orderDate").datepicker({
                 dateFormat: 'yy-mm-dd'
             });
+            var path="{{route('autocomplete')}}";
+            console.log(path);
+            $('input.typeahead').typeahead({
+                source:function(query,process){
+                    return $.get(path,{query:name},function(data){
+                        return process(data);
+                    });
+                }
+            });
         });
+
+        
+
 
         function addRow() {
             // $("#addRowBtn").button("loading");
